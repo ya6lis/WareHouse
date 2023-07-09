@@ -1,8 +1,8 @@
 const {
-    connectingDataBase,
+    connectDataBase,
     sequelize,
     DataTypes,
-} = require('./connectingDataBase');
+} = require('./connectDataBase');
 
 const Category = sequelize.define(
     'category',
@@ -331,4 +331,15 @@ const createTables = async () => {
         });
 };
 
+
+
 module.exports.createTables = createTables;
+module.exports.Category = Category;
+module.exports.Producer = Producer;
+module.exports.Product = Product;
+module.exports.ProductAmount = ProductAmount;
+module.exports.Stock = Stock;
+module.exports.Storage = Storage;
+module.exports.UnderCategory = UnderCategory;
+module.exports.User = User;
+

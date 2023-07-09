@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(process.env.SEQUELIZE_URL, {logging: false});
 
-const connectingDataBase = async () => {
+const connectDataBase = async () => {
     sequelize
         .authenticate()
         .then((data) => {
@@ -14,7 +14,7 @@ const connectingDataBase = async () => {
         
 };
 
-module.exports.connectingDataBase = connectingDataBase;
+module.exports.connectDataBase = connectDataBase;
 module.exports.sequelize = sequelize;
 module.exports.DataTypes = DataTypes;
 module.exports.Sequelize = Sequelize;
