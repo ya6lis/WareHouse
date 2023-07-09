@@ -1,12 +1,7 @@
-const {
-    connectingDataBase,
-    sequelize,
-    DataTypes,
-    Sequelize,
-} = require('../connectDataBase');
-const { User } = require('../creatingTable');
+const { User } = require('./creatingTable');
 
 const addNewUser = async (login, password, email, name) => {
+    
     await User.create({
         login,
         password,

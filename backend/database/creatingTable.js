@@ -321,7 +321,6 @@ Stock.belongsTo(Product, {
     foreignKey: 'product_id',
 });
 
-
 const createTables = async () => {
     sequelize
         .sync()
@@ -330,8 +329,6 @@ const createTables = async () => {
             console.log(err);
         });
 };
-
-
 
 module.exports.createTables = createTables;
 module.exports.Category = Category;
