@@ -1,17 +1,14 @@
 require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(process.env.SEQUELIZE_URL, {logging: false});
+const sequelize = new Sequelize(process.env.SEQUELIZE_URL, { logging: false });
 
-const connectDataBase = async () => {
+const connectDataBase = () => {
     sequelize
         .authenticate()
-        .then((data) => {
-            console.log('Connecting with db successful...');
-        })
+        .then((data) => console.log('Connecting with db successful...'))
         .catch((err) => {
             console.log('Connecting ends with error...');
         });
-        
 };
 
 module.exports.connectDataBase = connectDataBase;
