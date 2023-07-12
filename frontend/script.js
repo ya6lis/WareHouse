@@ -1,3 +1,29 @@
+const loadUser = () => {
+    $('.showUser').empty();
+    fetch('http://localhost:3000/api/user')
+        .then((res) => res.json())
+        .then((users) => {
+            users.forEach((user) => {
+                $('.showUser')
+                    .prepend(`<div class="userData py-2 d-flex justify-content-between" id="${user.user_id}">
+                <div class="userInfo">id: ${user.user_id}</div>
+                <div class="userInfo">login: ${user.login}</div>
+                <div class="userInfo">password: ${user.password}</div>
+                <div class="userInfo">email: ${user.email}</div>
+                <div class="userInfo">name: ${user.name}</div>
+                <div class="userInfo">is_admin: ${user.is_admin}</div>
+                <div class="userInfo">is_deleted: ${user.is_deleted}</div>
+                <!-- <div class="userInfo">createdAt: ${user.createdAt}</div> -->
+                <!-- <div class="userInfo">updatedAt: ${user.updatedAt}</div> -->
+                <button type="button" class="delUser">Delete User</button>
+            </div>`);
+            });
+        })
+        .catch((error) => console.log(error));
+};
+
+loadUser();
+
 const getDataForNewUser = () => {
     const userData = {
         login: null,
@@ -26,44 +52,25 @@ const getDataForNewUser = () => {
 };
 
 $('.addBtn').on('click', () => {
-    if (getDataForNewUser()) {
+    const data = getDataForNewUser();
+    if (data) {
         fetch('http://localhost:3000/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: getDataForNewUser(),
+            body: data,
         })
-            .then(setTimeout(() => location.reload(true), 1))
+            .then(loadUser())
+            .then($(`input[name]`).val(''))
             .catch((error) => console.log(error));
     } else {
         console.log('not fetching');
     }
 });
 
-fetch('http://localhost:3000/api/user')
-    .then((res) => res.json())
-    .then((users) => {
-        users.forEach((user) => {
-            $('.showUser')
-                .prepend(`<div class="userData py-2 d-flex justify-content-between" id="${user.user_id}">
-                    <div class="userInfo">id: ${user.user_id}</div>
-                    <div class="userInfo">login: ${user.login}</div>
-                    <div class="userInfo">password: ${user.password}</div>
-                    <div class="userInfo">email: ${user.email}</div>
-                    <div class="userInfo">name: ${user.name}</div>
-                    <div class="userInfo">is_admin: ${user.is_admin}</div>
-                    <div class="userInfo">is_deleted: ${user.is_deleted}</div>
-                    <!-- <div class="userInfo">createdAt: ${user.createdAt}</div> -->
-                    <!-- <div class="userInfo">updatedAt: ${user.updatedAt}</div> -->
-                    <button type="button" class="delUser">Delete User</button>
-                </div>`);
-        });
-    })
-    .catch((error) => console.log(error));
-
 $('.showUser').on('click', '.delUser', (event) => {
-    const a = {
+    const returnId = {
         id: $(event.currentTarget.parentElement).attr('id'),
     };
     fetch('http://localhost:3000/api/user', {
@@ -71,8 +78,8 @@ $('.showUser').on('click', '.delUser', (event) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(a),
+        body: JSON.stringify(returnId),
     })
-        .then(setTimeout(() => location.reload(true), 1))
+        .then(loadUser())
         .catch((error) => console.log(error));
 });

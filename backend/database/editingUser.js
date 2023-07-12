@@ -1,7 +1,7 @@
-const { User } = require('./creatingTable');
+const { User } = require('./tables/user');
 
-const addNewUser = (data) => {
-    User.create({
+const addNewUser = async (data) => {
+    return await User.create({
         login: data.login,
         password: data.password,
         email: data.email,
@@ -10,18 +10,25 @@ const addNewUser = (data) => {
 };
 
 const returnUsers = async () => {
-    const users = await User.findAll();
-    return await JSON.stringify(users, null, 2);
+    const users = await User.findAll({
+        where: {
+            is_deleted: false,
+        }
+    });
+    return await users;
 };
 
-const deleteUser = async (data) => {
-    await User.destroy({
-        where: {
-            user_id: Object.values(data),
+const isDeleteUser = async (data) => {
+    await User.update(
+        {
+            is_deleted: true,
         },
-    });
+        {
+            where: { user_id: Object.values(data) },
+        }
+    );
 };
 
 module.exports.addNewUser = addNewUser;
 module.exports.returnUsers = returnUsers;
-module.exports.deleteUser = deleteUser;
+module.exports.isDeleteUser = isDeleteUser;
