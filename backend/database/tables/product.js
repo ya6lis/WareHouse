@@ -1,6 +1,4 @@
 const { sequelize, DataTypes } = require('../connectDataBase');
-const { Storage } = require('./storage');
-const { ProductAmount } = require('./product_amount');
 
 const Product = sequelize.define(
     'product',
@@ -32,16 +30,5 @@ const Product = sequelize.define(
         freezeTableName: true,
     }
 );
-
-
-
-Storage.belongsToMany(Product, {
-    through: ProductAmount,
-    foreignKey: 'storage_id',
-});
-Product.belongsToMany(Storage, {
-    through: ProductAmount,
-    foreignKey: 'product_id',
-});
 
 module.exports.Product = Product;

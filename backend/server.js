@@ -3,32 +3,27 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const { connectDataBase } = require('../backend/database/connectDataBase');
-const {
-    addNewUser,
-    returnUsers,
-    isDeleteUser,
-} = require('../backend/database/editingUser');
+
+const userApiRoutes = require('./routes/api-user-routes')
+const categoryApiRoutes = require('./routes/api-category-routes')
+const producerApiRoutes = require('./routes/api-producer-routes')
+const storageApiRoutes = require('./routes/api-storage-routes')
+const subcategoryApiRoutes = require('./routes/api-subcategory-routes')
+const productApiRoutes = require('./routes/api-product-routes')
+const productAmountApiRoutes = require('./routes/api-productAmount-routes')
 
 connectDataBase();
 
 app.use(express.json());
 app.use(cors());
 
-app.post('/api/user', async (req, res) => {
-    const a = await addNewUser(req.body);
-    res.status(201).send(a)
-    
-});
-
-app.delete('/api/user', async (req, res) => {
-    const d = await isDeleteUser(req.body);
-    res.status(200).send(d)
-});
-
-app.get('/api/user', async (req, res) => {
-    const users = await returnUsers();
-    await res.send(users);
-});
+app.use(userApiRoutes)
+app.use(categoryApiRoutes)
+app.use(producerApiRoutes)
+app.use(storageApiRoutes)
+app.use(subcategoryApiRoutes)
+app.use(productApiRoutes)
+app.use(productAmountApiRoutes)
 
 app.listen(process.env.PORT, (error) => {
     error

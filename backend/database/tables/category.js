@@ -1,5 +1,5 @@
 const { sequelize, DataTypes } = require('../connectDataBase');
-const { UnderCategory } = require('./under_category');
+const { Subcategory } = require('./subcategory');
 
 const Category = sequelize.define(
     'category',
@@ -24,10 +24,10 @@ const Category = sequelize.define(
     }
 );
 
-Category.hasMany(UnderCategory, {
+Category.hasMany(Subcategory, {
     foreignKey: 'category_id',
 });
-UnderCategory.belongsTo(Category, {
+Subcategory.belongsTo(Category, {
     foreignKey: 'category_id',
 });
 

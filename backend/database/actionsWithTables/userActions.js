@@ -1,9 +1,13 @@
-const { User } = require('./tables/user');
+const bcrypt = require('bcrypt')
+const { User } = require('../tables/user');
 
 const addNewUser = async (data) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = await bcrypt.hash(data.password, 10);
+
     return await User.create({
         login: data.login,
-        password: data.password,
+        password: hash,
         email: data.email,
         name: data.name,
     });
@@ -11,6 +15,7 @@ const addNewUser = async (data) => {
 
 const returnUsers = async () => {
     const users = await User.findAll({
+        attributes: ['user_id', 'login', 'email', 'name', 'is_admin', 'is_deleted'],
         where: {
             is_deleted: false,
         }

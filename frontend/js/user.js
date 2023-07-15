@@ -8,13 +8,10 @@ const loadUser = () => {
                     .prepend(`<div class="userData py-2 d-flex justify-content-between" id="${user.user_id}">
                 <div class="userInfo">id: ${user.user_id}</div>
                 <div class="userInfo">login: ${user.login}</div>
-                <div class="userInfo">password: ${user.password}</div>
                 <div class="userInfo">email: ${user.email}</div>
                 <div class="userInfo">name: ${user.name}</div>
                 <div class="userInfo">is_admin: ${user.is_admin}</div>
                 <div class="userInfo">is_deleted: ${user.is_deleted}</div>
-                <!-- <div class="userInfo">createdAt: ${user.createdAt}</div> -->
-                <!-- <div class="userInfo">updatedAt: ${user.updatedAt}</div> -->
                 <button type="button" class="delUser">Delete User</button>
             </div>`);
             });
@@ -61,7 +58,7 @@ $('.addBtn').on('click', () => {
             },
             body: data,
         })
-            .then(loadUser())
+            .then(setTimeout(() => loadUser(), 100))
             .then($(`input[name]`).val(''))
             .catch((error) => console.log(error));
     } else {
@@ -80,6 +77,6 @@ $('.showUser').on('click', '.delUser', (event) => {
         },
         body: JSON.stringify(returnId),
     })
-        .then(loadUser())
+        .then(setTimeout(() => loadUser(), 100))
         .catch((error) => console.log(error));
 });

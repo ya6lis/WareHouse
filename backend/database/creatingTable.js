@@ -1,7 +1,7 @@
 const { sequelize } = require('./connectDataBase');
 const { User } = require('./tables/user');
 const { Category } = require('./tables/category');
-const { UnderCategory } = require('./tables/under_category');
+const { Subcategory } = require('./tables/subcategory');
 const { Producer } = require('./tables/producer');
 const { Product } = require('./tables/product');
 const { Storage } = require('./tables/storage');
@@ -11,6 +11,7 @@ const createTables = async () => {
     sequelize
         .sync()
         .then((data) => {
+            // Creating unique key for product_amount table.
             sequelize.queryInterface.addConstraint('product_amount', {
                 fields: ['storage_id', 'product_id'],
                 type: 'unique',

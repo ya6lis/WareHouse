@@ -1,10 +1,10 @@
 const { sequelize, DataTypes } = require('../connectDataBase');
 const { Product } = require('./product');
 
-const UnderCategory = sequelize.define(
-    'under_category',
+const Subcategory = sequelize.define(
+    'subcategory',
     {
-        under_category_id: {
+        subcategory_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -24,12 +24,11 @@ const UnderCategory = sequelize.define(
     }
 );
 
-UnderCategory.hasMany(Product, {
-    
-    foreignKey: 'under_category_id',
+Subcategory.hasMany(Product, {
+    foreignKey: 'subcategory_id',
 });
-Product.belongsTo(UnderCategory, {
-    foreignKey: 'under_category_id',
+Product.belongsTo(Subcategory, {
+    foreignKey: 'subcategory_id',
 });
 
-module.exports.UnderCategory = UnderCategory;
+module.exports.Subcategory = Subcategory;

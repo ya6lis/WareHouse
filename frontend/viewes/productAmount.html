@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ProductAmount</title>
+        <link rel="stylesheet" href="../assets/styles/bootstrap.min.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../assets/styles/style.css"
+        />
+    </head>
+    <body>
+        <div class="container py-5 border-bottom">
+            <form
+                id="post-form"
+                method="post"
+                action="/"
+                class="d-flex justify-content-between"
+            >
+                <div class="form-info">
+                    <label
+                        >ProductAmount name
+                        <input type="text" name="amount" />
+                    </label>
+                    <label for="storage">Choose a storage:</label>
+                    <select name="storage" class="storage"></select>
+                    <label for="product">Choose a product:</label>
+                    <select name="product" class="product"></select>
+                </div>
+                <button type="button" class="addBtn">Add New ProductAmount</button>
+            </form>
+        </div>
+
+        <div class="container py-3">
+            <div class="showProductAmount row">
+                
+            </div>
+        </div>
+
+        <script src="../js/code.jquery.com_jquery-3.7.0.min.js"></script>
+        <script src="../js/productAmount.js"></script>
+    </body>
+</html>
