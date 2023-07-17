@@ -35,6 +35,7 @@ const getDataForNewStorage = () => {
         }
     });
     if (checkAllRight === Object.keys(storageData).length) {
+        
         return JSON.stringify(storageData);
     } else {
         return 0;

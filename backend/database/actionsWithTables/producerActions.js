@@ -1,4 +1,5 @@
 const { Producer } = require('../tables/producer');
+const { Product } = require('../tables/product');
 
 const addNewProducer = async (data) => {
     return await Producer.create({
@@ -6,27 +7,35 @@ const addNewProducer = async (data) => {
     });
 };
 
-const returnProducer = async () => {
+const getAllProducer = async () => {
     const producers = await Producer.findAll({
         attributes: ['producer_id', 'name', 'is_deleted'],
         where: {
             is_deleted: false,
-        }
+        },
     });
     return await producers;
 };
 
-const isDeleteProducer = async (data) => {
+const deleteProducer = async (data) => {
     await Producer.update(
         {
             is_deleted: true,
         },
         {
-            where: { producer_id: Object.values(data) },
+            where: { producer_id: data.id },
+        }
+    );
+    await Product.update(
+        {
+            is_deleted: true,
+        },
+        {
+            where: { producer_id: data.id },
         }
     );
 };
 
 module.exports.addNewProducer = addNewProducer;
-module.exports.returnProducer = returnProducer;
-module.exports.isDeleteProducer = isDeleteProducer;
+module.exports.getAllProducer = getAllProducer;
+module.exports.deleteProducer = deleteProducer;

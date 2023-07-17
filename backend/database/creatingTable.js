@@ -1,7 +1,7 @@
 const { sequelize } = require('./connectDataBase');
 const { User } = require('./tables/user');
-const { Category } = require('./tables/category');
-const { Subcategory } = require('./tables/subcategory');
+const { Categorie } = require('./tables/categorie');
+const { Subcategorie } = require('./tables/subcategorie');
 const { Producer } = require('./tables/producer');
 const { Product } = require('./tables/product');
 const { Storage } = require('./tables/storage');

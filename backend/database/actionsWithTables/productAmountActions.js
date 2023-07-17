@@ -1,49 +1,11 @@
 const { ProductAmount } = require('../tables/product_amount');
 
 const addNewProductAmount = async (data) => {
-    try {
-        try {
-            return await ProductAmount.create({
-                amount: data.amount,
-                storage_id: data.storage_id,
-                product_id: data.product_id,
-            });
-        } catch {
-            let amount = 0;
-            ProductAmount.findAll(
-                {
-                    where: {
-                        storage_id: data.storage_id,
-                        product_id: data.product_id,
-                    },
-                },
-                {
-                    attributes: ['amount'],
-                }
-            )
-                //Getting old value
-                .then((values) => {
-                    for (const prAm of values) {
-                        amount = prAm.amount;
-                    }
-                })
-                .then(() => {
-                    return ProductAmount.update(
-                        {
-                            amount: amount + parseFloat(Math.abs(data.amount)),
-                        },
-                        {
-                            where: {
-                                storage_id: data.storage_id,
-                                product_id: data.product_id,
-                            },
-                        }
-                    );
-                });
-        }
-    } catch (error) {
-        console.log(error);
-    }
+    return await ProductAmount.create({
+        amount: data.amount,
+        storage_id: data.storage_id,
+        product_id: data.product_id,
+    });
 };
 
 const returnProductAmounts = async () => {

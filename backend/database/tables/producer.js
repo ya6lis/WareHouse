@@ -12,6 +12,7 @@ const Producer = sequelize.define(
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         is_deleted: {
             type: DataTypes.BOOLEAN,

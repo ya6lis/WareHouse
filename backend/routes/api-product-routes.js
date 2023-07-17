@@ -3,32 +3,27 @@ const router = express.Router();
 
 const {
     addNewProduct,
-    returnProducts,
-    isDeleteProduct,
+    getAllProducts,
+    deleteProduct,
 } = require('../database/actionsWithTables/productActions');
 
-const {
-    returnSubcategorys,
-} = require('../database/actionsWithTables/subcategoryActions');
-const {
-    returnProducer,
-} = require('../database/actionsWithTables/producerActions');
-
 router.post('/api/product', async (req, res) => {
-    const data = await addNewProduct(req.body);
-    res.status(201).send(data);
+    try {
+        const data = await addNewProduct(req.body);
+        res.status(201).send(data);
+    } catch (error) {
+        res.status(400).send({message: 'Bad value'});
+    }
 });
 
 router.get('/api/product', async (req, res) => {
-    const products = await returnProducts();
-    const subcategorys = await returnSubcategorys();
-    const producers = await returnProducer();
-    await res.send([products, subcategorys, producers]);
+    const products = await getAllProducts();
+    await res.send(products);
 });
 
 router.delete('/api/product', async (req, res) => {
-    const data = await isDeleteProduct(req.body);
-    res.status(200).send(data)
+    const data = await deleteProduct(req.body);
+    res.status(200).send(data);
 });
 
 module.exports = router;

@@ -26,7 +26,11 @@
                     </label>
                     <label
                         >Product price
-                        <input type="text" name="price" />
+                        <input type="number" name="price" />
+                    </label>
+                    <label
+                        >Product amount
+                        <input type="number" name="amount" />
                     </label>
                     <label for="unit">Choose a product unit:</label>
                     <select name="unit" class="unit">
@@ -34,10 +38,14 @@
                         <option value="2">кг.</option>
                         <option value="3">л.</option>
                     </select>
-                    <label for="subcategory">Choose a product subcategory:</label>
-                    <select name="subcategory" class="subcategory"></select>
+                    <label for="subcategorie"
+                        >Choose a product subcategorie:</label
+                    >
+                    <select name="subcategorie" class="subcategorie"></select>
                     <label for="producer">Choose a product producer:</label>
                     <select name="producer" class="producer"></select>
+                    <label for="storage">Choose a product storage:</label>
+                    <select name="storage" class="storage"></select>
                 </div>
                 <button type="button" class="addBtn">Add New Product</button>
             </form>

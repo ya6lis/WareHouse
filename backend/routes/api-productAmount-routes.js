@@ -6,23 +6,18 @@ const {
     returnProductAmounts,
 } = require('../database/actionsWithTables/productAmountActions');
 
-const {
-    returnStorages,
-} = require('../database/actionsWithTables/storageActions');
-const {
-    returnProducts,
-} = require('../database/actionsWithTables/productActions');
-
 router.post('/api/productAmount', async (req, res) => {
-    const data = await addNewProductAmount(req.body);
-    res.status(201).send(data);
+    try {
+        const data = await addNewProductAmount(req.body);
+        res.status(201).send(data);
+    } catch (error) {
+        res.status(400).send({ message: 'Bad value' });
+    }
 });
 
 router.get('/api/productAmount', async (req, res) => {
     const productAmounts = await returnProductAmounts();
-    const storages = await returnStorages();
-    const products = await returnProducts();
-    await res.send([productAmounts, storages, products]);
+    await res.send(productAmounts);
 });
 
 module.exports = router;

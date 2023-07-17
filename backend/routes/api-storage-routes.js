@@ -3,23 +3,27 @@ const router = express.Router();
 
 const {
     addNewStorage,
-    returnStorages,
-    isDeleteStorage,
+    getAllStorages,
+    deleteStorage,
 } = require('../database/actionsWithTables/storageActions');
 
 router.post('/api/storage', async (req, res) => {
-    const data = await addNewStorage(req.body);
-    res.status(201).send(data);
+    try {
+        const data = await addNewStorage(req.body);
+        res.status(201).send(data);
+    } catch (error) {
+        res.status(400).send({ message: 'The name already exists!' });
+    }
 });
 
 router.get('/api/storage', async (req, res) => {
-    const storages = await returnStorages();
+    const storages = await getAllStorages();
     await res.send(storages);
 });
 
 router.delete('/api/storage', async (req, res) => {
-    const data = await isDeleteStorage(req.body);
-    res.status(200).send(data)
+    const data = await deleteStorage(req.body);
+    res.status(200).send(data);
 });
 
 module.exports = router;

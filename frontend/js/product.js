@@ -1,18 +1,11 @@
 const loadProduct = () => {
     $('.showProduct').empty();
-    $('.subcategory').empty();
+    $('.subcategorie').empty();
     $('.producer').empty();
-    let products = [];
-    let subcategorys = [];
-    let producers = [];
+    $('.storage').empty();
     fetch('http://localhost:3000/api/product')
-        .then(async (res) => {
-            let tempData = await res.json();
-            products = tempData[0];
-            subcategorys = tempData[1];
-            producers = tempData[2];
-        })
-        .then(() => {
+        .then((res) => res.json())
+        .then((products) => {
             products.forEach((product) => {
                 $('.showProduct')
                     .prepend(`<div class="productData py-2 d-flex justify-content-between" id="${product.product_id}">
@@ -20,24 +13,43 @@ const loadProduct = () => {
                 <div class="productInfo">name: ${product.name}</div>
                 <div class="productInfo">price: ${product.price}</div>
                 <div class="productInfo">unit: ${product.unit}</div>
-                <div class="productInfo">subcategory_id: ${product.subcategory_id}</div>
-                <div class="productInfo">producer_id: ${product.producer_id}</div>
+                <div class="productInfo">subcategorie: ${product.subcategorie.name}</div>
+                <div class="productInfo">producer_id: ${product.producer.name}</div>
                   <div class="productInfo">is_deleted: ${product.is_deleted}</div>
                 <button type="button" class="delProduct">Delete Product</button>
             </div>`);
             });
         })
-        .then(() => {
-            subcategorys.forEach((subcategory) => {
-                $('.subcategory').append(`
-                        <option value="${subcategory.subcategory_id}">${subcategory.name}</option>
+        .catch((error) => console.log(error));
+
+    fetch('http://localhost:3000/api/subcategorie')
+        .then((res) => res.json())
+        .then((subcategories) => {
+            subcategories.forEach((subcategorie) => {
+                $('.subcategorie').append(`
+                        <option value="${subcategorie.subcategorie_id}">${subcategorie.name}</option>
                     `);
             });
         })
-        .then(() => {
+        .catch((error) => console.log(error));
+
+    fetch('http://localhost:3000/api/producer')
+        .then((res) => res.json())
+        .then((producers) => {
             producers.forEach((producer) => {
                 $('.producer').append(`
                         <option value="${producer.producer_id}">${producer.name}</option>
+                    `);
+            });
+        })
+        .catch((error) => console.log(error));
+
+    fetch('http://localhost:3000/api/storage')
+        .then((res) => res.json())
+        .then((storages) => {
+            storages.forEach((storage) => {
+                $('.storage').append(`
+                        <option value="${storage.storage_id}">${storage.name}</option>
                     `);
             });
         })
@@ -50,13 +62,12 @@ const getDataForNewProduct = () => {
     const productData = {
         name: null,
         price: null,
+        amount: null,
     };
     let checkAllRight = 0;
 
     Object.keys(productData).forEach((value) => {
-        if (
-            !$(`input[name=${value}]`).val()
-        ) {
+        if (!$(`input[name=${value}]`).val()) {
             console.log('inncorect');
         } else {
             checkAllRight++;
@@ -65,8 +76,9 @@ const getDataForNewProduct = () => {
     });
     if (checkAllRight === Object.keys(productData).length) {
         productData.unit = $('.unit option:selected').text();
-        productData.subcategory_id = $('.subcategory option:selected').val();
+        productData.subcategorie_id = $('.subcategorie option:selected').val();
         productData.producer_id = $('.producer option:selected').val();
+        productData.storage_id = $('.storage option:selected').val();
         return JSON.stringify(productData);
     } else {
         return 0;

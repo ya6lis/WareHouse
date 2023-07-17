@@ -1,10 +1,10 @@
 const { sequelize, DataTypes } = require('../connectDataBase');
-const { Subcategory } = require('./subcategory');
+const { Subcategorie } = require('./subcategorie');
 
-const Category = sequelize.define(
-    'category',
+const Categorie = sequelize.define(
+    'categorie',
     {
-        category_id: {
+        categorie_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -12,6 +12,7 @@ const Category = sequelize.define(
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         is_deleted: {
             type: DataTypes.BOOLEAN,
@@ -24,11 +25,11 @@ const Category = sequelize.define(
     }
 );
 
-Category.hasMany(Subcategory, {
-    foreignKey: 'category_id',
+Categorie.hasMany(Subcategorie, {
+    foreignKey: 'categorie_id',
 });
-Subcategory.belongsTo(Category, {
-    foreignKey: 'category_id',
+Subcategorie.belongsTo(Categorie, {
+    foreignKey: 'categorie_id',
 });
 
-module.exports.Category = Category;
+module.exports.Categorie = Categorie;

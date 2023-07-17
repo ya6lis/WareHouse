@@ -2,18 +2,15 @@ const bcrypt = require('bcrypt')
 const { User } = require('../tables/user');
 
 const addNewUser = async (data) => {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = await bcrypt.hash(data.password, 10);
-
     return await User.create({
         login: data.login,
-        password: hash,
+        password: await bcrypt.hash(data.password, 10),
         email: data.email,
         name: data.name,
     });
 };
 
-const returnUsers = async () => {
+const getAllUsers = async () => {
     const users = await User.findAll({
         attributes: ['user_id', 'login', 'email', 'name', 'is_admin', 'is_deleted'],
         where: {
@@ -23,17 +20,17 @@ const returnUsers = async () => {
     return await users;
 };
 
-const isDeleteUser = async (data) => {
+const deleteUser = async (data) => {
     await User.update(
         {
             is_deleted: true,
         },
         {
-            where: { user_id: Object.values(data) },
+            where: { user_id: data.id },
         }
     );
 };
 
 module.exports.addNewUser = addNewUser;
-module.exports.returnUsers = returnUsers;
-module.exports.isDeleteUser = isDeleteUser;
+module.exports.getAllUsers = getAllUsers;
+module.exports.deleteUser = deleteUser;
