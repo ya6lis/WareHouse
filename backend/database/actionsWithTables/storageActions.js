@@ -17,21 +17,13 @@ const getAllStorages = async () => {
     return await storages;
 };
 
-const deleteStorage = async (data) => {
+const deleteStorage = async (id) => {
     await Storage.update(
         {
             is_deleted: true,
         },
         {
-            where: { storage_id: data.id },
-        }
-    );
-    await Product.update(
-        {
-            is_deleted: true,
-        },
-        {
-            where: { storage_id: data.id },
+            where: { storage_id: id },
         }
     );
 };

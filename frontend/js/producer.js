@@ -60,15 +60,9 @@ $('.addBtn').on('click', () => {
 });
 
 $('.showProducer').on('click', '.delProducer', (event) => {
-    const returnId = {
-        id: $(event.currentTarget.parentElement).attr('id'),
-    };
-    fetch('http://localhost:3000/api/producer', {
+    let id = $(event.currentTarget.parentElement).attr('id')
+    fetch(`http://localhost:3000/api/producer/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnId),
     })
         .then(setTimeout(() => loadProducer(), 100))
         .catch((error) => console.log(error));

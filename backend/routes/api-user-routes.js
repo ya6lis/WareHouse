@@ -21,9 +21,9 @@ router.get('/api/user', async (req, res) => {
     await res.send(users);
 });
 
-router.delete('/api/user', async (req, res) => {
-    const data = await deleteUser(req.body);
-    res.status(200).send(data)
+router.delete('/api/user/:id', async (req, res) => {
+    const userId = await deleteUser(req.params.id);
+    res.status(200).send(userId)
 });
 
 module.exports = router;

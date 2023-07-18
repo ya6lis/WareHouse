@@ -21,9 +21,9 @@ router.get('/api/subcategorie', async (req, res) => {
     await res.send(subcategories);
 });
 
-router.delete('/api/subcategorie', async (req, res) => {
-    const data = await deleteSubcategorie(req.body);
-    res.status(200).send(data);
+router.delete('/api/subcategorie/:id', async (req, res) => {
+    const subcategorieId = await deleteSubcategorie(req.params.id);
+    res.status(200).send(subcategorieId);
 });
 
 module.exports = router;

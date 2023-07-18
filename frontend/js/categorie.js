@@ -25,9 +25,7 @@ const getDataForNewCategorie = () => {
     let checkAllRight = 0;
 
     Object.keys(categorieData).forEach((value) => {
-        if (
-            !$(`input[name=${value}]`).val()
-        ) {
+        if (!$(`input[name=${value}]`).val()) {
             console.log('inncorect');
         } else {
             checkAllRight++;
@@ -60,15 +58,9 @@ $('.addBtn').on('click', () => {
 });
 
 $('.showCategorie').on('click', '.delCategorie', (event) => {
-    const returnId = {
-        id: $(event.currentTarget.parentElement).attr('id'),
-    };
-    fetch('http://localhost:3000/api/categorie', {
+    let id = $(event.currentTarget.parentElement).attr('id');
+    fetch(`http://localhost:3000/api/categorie/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnId),
     })
         .then(setTimeout(() => loadCategorie(), 100))
         .catch((error) => console.log(error));

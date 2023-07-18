@@ -21,9 +21,9 @@ router.get('/api/categorie', async (req, res) => {
     await res.send(categories);
 });
 
-router.delete('/api/categorie', async (req, res) => {
-    const data = await deleteCategorie(req.body);
-    res.status(200).send(data);
-});
+router.delete('/api/categorie/:id', async (req, res) => {
+    const categorieId = await deleteCategorie(req.params.id);
+    res.status(200).send(categorieId);
+  });
 
 module.exports = router;

@@ -31,13 +31,13 @@ const getAllSubcategories = async () => {
     return await subcategories;
 };
 
-const deleteSubcategorie = async (data) => {
+const deleteSubcategorie = async (id) => {
     await Subcategorie.update(
         {
             is_deleted: true,
         },
         {
-            where: { subcategorie_id: data.id },
+            where: { subcategorie_id: id },
         }
     );
     await Product.update(
@@ -45,7 +45,7 @@ const deleteSubcategorie = async (data) => {
             is_deleted: true,
         },
         {
-            where: { subcategorie_id: data.id },
+            where: { subcategorie_id: id },
         }
     );
 };

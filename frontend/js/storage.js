@@ -61,15 +61,9 @@ $('.addBtn').on('click', () => {
 });
 
 $('.showStorage').on('click', '.delStorage', (event) => {
-    const returnId = {
-        id: $(event.currentTarget.parentElement).attr('id'),
-    };
-    fetch('http://localhost:3000/api/storage', {
+    let id = $(event.currentTarget.parentElement).attr('id');
+    fetch(`http://localhost:3000/api/storage/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnId),
     })
         .then(setTimeout(() => loadStorage(), 100))
         .catch((error) => console.log(error));

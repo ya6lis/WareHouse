@@ -17,13 +17,13 @@ const getAllCategories = async () => {
     return await categories;
 };
 
-const deleteCategorie = async (data) => {
+const deleteCategorie = async (id) => {
     await Categorie.update(
         {
             is_deleted: true,
         },
         {
-            where: { categorie_id: data.id },
+            where: { categorie_id: id },
         }
     );
     await Subcategorie.update(
@@ -31,7 +31,7 @@ const deleteCategorie = async (data) => {
             is_deleted: true,
         },
         {
-            where: { categorie_id: data.id },
+            where: { categorie_id: id },
         }
     );
 };

@@ -67,15 +67,9 @@ $('.addBtn').on('click', () => {
 });
 
 $('.showUser').on('click', '.delUser', (event) => {
-    const returnId = {
-        id: $(event.currentTarget.parentElement).attr('id'),
-    };
-    fetch('http://localhost:3000/api/user', {
+    let id = $(event.currentTarget.parentElement).attr('id')
+    fetch(`http://localhost:3000/api/user/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnId),
     })
         .then(setTimeout(() => loadUser(), 100))
         .catch((error) => console.log(error));

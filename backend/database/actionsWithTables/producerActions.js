@@ -17,13 +17,13 @@ const getAllProducer = async () => {
     return await producers;
 };
 
-const deleteProducer = async (data) => {
+const deleteProducer = async (id) => {
     await Producer.update(
         {
             is_deleted: true,
         },
         {
-            where: { producer_id: data.id },
+            where: { producer_id: id },
         }
     );
     await Product.update(
@@ -31,7 +31,7 @@ const deleteProducer = async (data) => {
             is_deleted: true,
         },
         {
-            where: { producer_id: data.id },
+            where: { producer_id: id },
         }
     );
 };

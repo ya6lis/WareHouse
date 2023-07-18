@@ -73,15 +73,9 @@ $('.addBtn').on('click', () => {
 });
 
 $('.showSubcategorie').on('click', '.delSubcategorie', (event) => {
-    const returnId = {
-        id: $(event.currentTarget.parentElement).attr('id'),
-    };
-    fetch('http://localhost:3000/api/subcategorie', {
+    let id = $(event.currentTarget.parentElement).attr('id')
+    fetch(`http://localhost:3000/api/subcategorie/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnId),
     })
         .then(setTimeout(() => loadSubcategorie(), 100))
         .catch((error) => console.log(error));

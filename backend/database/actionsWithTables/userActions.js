@@ -20,13 +20,13 @@ const getAllUsers = async () => {
     return await users;
 };
 
-const deleteUser = async (data) => {
+const deleteUser = async (id) => {
     await User.update(
         {
             is_deleted: true,
         },
         {
-            where: { user_id: data.id },
+            where: { user_id: id },
         }
     );
 };

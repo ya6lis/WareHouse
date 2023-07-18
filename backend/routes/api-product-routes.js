@@ -21,9 +21,9 @@ router.get('/api/product', async (req, res) => {
     await res.send(products);
 });
 
-router.delete('/api/product', async (req, res) => {
-    const data = await deleteProduct(req.body);
-    res.status(200).send(data);
-});
+router.delete('/api/product/:id', async (req, res) => {
+    const userId = await deleteProduct(req.params.id);
+    res.status(200).send(userId);
+  });
 
 module.exports = router;

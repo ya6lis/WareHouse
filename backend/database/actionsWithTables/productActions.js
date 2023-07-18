@@ -4,7 +4,6 @@ const { Producer } = require('../tables/producer');
 
 const {
     addNewProductAmount,
-    returnProductAmounts,
 } = require('./productAmountActions');
 
 const addNewProduct = async (data) => {
@@ -20,7 +19,7 @@ const addNewProduct = async (data) => {
         storage_id: data.storage_id,
         product_id: newProduct.product_id,
     }
-    addNewProductAmount(dataForProductAmount);
+    await addNewProductAmount(dataForProductAmount);
 };
 
 const getAllProducts = async () => {
@@ -47,13 +46,13 @@ const getAllProducts = async () => {
     return await products;
 };
 
-const deleteProduct = async (data) => {
+const deleteProduct = async (id) => {
     await Product.update(
         {
             is_deleted: true,
         },
         {
-            where: { product_id: data.id },
+            where: { product_id: id },
         }
     );
 };

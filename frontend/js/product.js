@@ -104,15 +104,9 @@ $('.addBtn').on('click', () => {
 });
 
 $('.showProduct').on('click', '.delProduct', (event) => {
-    const returnId = {
-        id: $(event.currentTarget.parentElement).attr('id'),
-    };
-    fetch('http://localhost:3000/api/product', {
+    let id = $(event.currentTarget.parentElement).attr('id');
+    fetch(`http://localhost:3000/api/product/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(returnId),
     })
         .then(setTimeout(() => loadProduct(), 100))
         .catch((error) => console.log(error));

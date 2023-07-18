@@ -21,9 +21,9 @@ router.get('/api/storage', async (req, res) => {
     await res.send(storages);
 });
 
-router.delete('/api/storage', async (req, res) => {
-    const data = await deleteStorage(req.body);
-    res.status(200).send(data);
+router.delete('/api/storage/:id', async (req, res) => {
+    const storageId = await deleteStorage(req.params.id);
+    res.status(200).send(storageId);
 });
 
 module.exports = router;
