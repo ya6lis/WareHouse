@@ -12,6 +12,25 @@
         />
     </head>
     <body>
+        <dialog class="modal">
+            <form class="d-flex justify-content-between">
+                <div class="form-info">
+                    <label
+                        >New name
+                        <input type="text" name="modalName" class="modalName"/>
+                    </label>
+                </div>
+                <div>
+                    <button type="button" class="updateModal">
+                        Update Categorie
+                    </button>
+                    <button type="button" class="closeModal">
+                        Close Modal
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
         <div class="container py-5 border-bottom">
             <form
                 id="post-form"
@@ -30,9 +49,7 @@
         </div>
 
         <div class="container py-3">
-            <div class="showCategorie row">
-                
-            </div>
+            <div class="showCategorie row"></div>
         </div>
 
         <script src="../js/code.jquery.com_jquery-3.7.0.min.js"></script>

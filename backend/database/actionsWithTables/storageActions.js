@@ -17,6 +17,17 @@ const getAllStorages = async () => {
     return await storages;
 };
 
+const updateStorage = async (id, info) => {
+    await Storage.update(
+        {
+            name: info.modalName,
+        },
+        {
+            where: { storage_id: id },
+        }
+    );
+};
+
 const deleteStorage = async (id) => {
     await Storage.update(
         {
@@ -30,4 +41,5 @@ const deleteStorage = async (id) => {
 
 module.exports.addNewStorage = addNewStorage;
 module.exports.getAllStorages = getAllStorages;
+module.exports.updateStorage = updateStorage;
 module.exports.deleteStorage = deleteStorage;

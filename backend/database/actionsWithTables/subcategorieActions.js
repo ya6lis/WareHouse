@@ -31,6 +31,18 @@ const getAllSubcategories = async () => {
     return await subcategories;
 };
 
+const updateSubcategorie = async (id, info) => {
+    await Subcategorie.update(
+        {
+            name: info.modalName,
+            categorie_id: info.categorie_id,
+        },
+        {
+            where: { subcategorie_id: id },
+        }
+    );
+};
+
 const deleteSubcategorie = async (id) => {
     await Subcategorie.update(
         {
@@ -52,4 +64,5 @@ const deleteSubcategorie = async (id) => {
 
 module.exports.addNewSubcategorie = addNewSubcategorie;
 module.exports.getAllSubcategories = getAllSubcategories;
+module.exports.updateSubcategorie = updateSubcategorie;
 module.exports.deleteSubcategorie = deleteSubcategorie;

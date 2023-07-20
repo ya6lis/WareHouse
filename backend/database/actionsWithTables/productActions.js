@@ -2,9 +2,7 @@ const { Product } = require('../tables/product');
 const { Subcategorie } = require('../tables/subcategorie');
 const { Producer } = require('../tables/producer');
 
-const {
-    addNewProductAmount,
-} = require('./productAmountActions');
+const { addNewProductAmount } = require('./productAmountActions');
 
 const addNewProduct = async (data) => {
     const newProduct = await Product.create({
@@ -18,7 +16,7 @@ const addNewProduct = async (data) => {
         amount: data.amount,
         storage_id: data.storage_id,
         product_id: newProduct.product_id,
-    }
+    };
     await addNewProductAmount(dataForProductAmount);
 };
 
@@ -46,6 +44,21 @@ const getAllProducts = async () => {
     return await products;
 };
 
+const updateProduct = async (id, info) => {
+    await Product.update(
+        {
+            name: info.modalName,
+            price: info.modalPrice,
+            unit: info.unit,
+            subcategorie_id: info.subcategorie_id,
+            producer_id: info.producer_id,
+        },
+        {
+            where: { product_id: id },
+        }
+    );
+};
+
 const deleteProduct = async (id) => {
     await Product.update(
         {
@@ -59,4 +72,5 @@ const deleteProduct = async (id) => {
 
 module.exports.addNewProduct = addNewProduct;
 module.exports.getAllProducts = getAllProducts;
+module.exports.updateProduct = updateProduct;
 module.exports.deleteProduct = deleteProduct;

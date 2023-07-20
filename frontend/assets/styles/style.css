@@ -6,3 +6,10 @@ body {
   margin-right: 10px;
 }
 
+.modal {
+  margin-top: 20%;
+  padding: 20px;
+  max-width: 600px;
+  max-height: 300px;
+  border: 1px solid;
+}

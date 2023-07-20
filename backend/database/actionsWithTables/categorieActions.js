@@ -17,6 +17,17 @@ const getAllCategories = async () => {
     return await categories;
 };
 
+const updateCategorie = async (id, info) => {
+    await Categorie.update(
+        {
+            name: info.modalName,
+        },
+        {
+            where: { categorie_id: id },
+        }
+    );
+};
+
 const deleteCategorie = async (id) => {
     await Categorie.update(
         {
@@ -38,4 +49,5 @@ const deleteCategorie = async (id) => {
 
 module.exports.addNewCategorie = addNewCategorie;
 module.exports.getAllCategories = getAllCategories;
+module.exports.updateCategorie = updateCategorie;
 module.exports.deleteCategorie = deleteCategorie;

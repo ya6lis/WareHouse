@@ -12,6 +12,41 @@
         />
     </head>
     <body>
+        <dialog class="modal">
+            <form class="d-flex justify-content-between">
+                <div class="form-info">
+                    <label
+                        >New name
+                        <input type="text" name="modalName" />
+                    </label>
+                    <label
+                        >New price
+                        <input type="number" name="modalPrice" />
+                    </label>
+                    <label for="modalUnit">Choose a new unit:</label>
+                    <select name="modalUnit" class="modalUnit">
+                        <option value="1">шт.</option>
+                        <option value="2">кг.</option>
+                        <option value="3">л.</option>
+                    </select>
+                    <label for="modalSubcategorie"
+                        >Choose a new subcategorie:</label
+                    >
+                    <select name="modalSubcategorie" class="modalSubcategorie"></select>
+                    <label for="modalProducer">Choose a new producer:</label>
+                    <select name="modalProducer" class="modalProducer"></select>
+                </div>
+                <div>
+                    <button type="button" class="updateModal">
+                        Update Categorie
+                    </button>
+                    <button type="button" class="closeModal">
+                        Close Modal
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
         <div class="container py-5 border-bottom">
             <form
                 id="post-form"

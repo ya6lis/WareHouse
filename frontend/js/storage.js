@@ -7,9 +7,12 @@ const loadStorage = () => {
                 $('.showStorage')
                     .prepend(`<div class="storageData py-2 d-flex justify-content-between" id="${storage.storage_id}">
                 <div class="storageInfo">id: ${storage.storage_id}</div>
-                <div class="storageInfo">name: ${storage.name}</div>
+                <div class="storageInfo">name: <span class="storageName">${storage.name}</span></div>
                 <div class="storageInfo">is_deleted: ${storage.is_deleted}</div>
-                <button type="button" class="delStorage">Delete Storage</button>
+                <div>
+                    <button type="button" class="updStorage">Update Storage</button>
+                    <button type="button" class="delStorage">Delete Storage</button>
+                </div>
             </div>`);
             });
         })
@@ -18,32 +21,30 @@ const loadStorage = () => {
 
 loadStorage();
 
-const getDataForNewStorage = () => {
-    const storageData = {
-        name: null,
-    };
+const getDataForNewStorage = (data) => {
     let checkAllRight = 0;
-
-    Object.keys(storageData).forEach((value) => {
-        if (
-            !$(`input[name=${value}]`).val()
-        ) {
+    Object.keys(data).forEach((value) => {
+        if (!$(`input[name=${value}]`).val()) {
             console.log('inncorect');
         } else {
             checkAllRight++;
-            storageData[value] = $(`input[name=${value}]`).val();
+            data[value] = $(`input[name=${value}]`).val();
         }
     });
-    if (checkAllRight === Object.keys(storageData).length) {
-        
-        return JSON.stringify(storageData);
+    if (checkAllRight === Object.keys(data).length) {
+        return JSON.stringify(data);
     } else {
         return 0;
     }
 };
 
+// ADD
+
 $('.addBtn').on('click', () => {
-    const data = getDataForNewStorage();
+    const storageData = {
+        name: null,
+    };
+    const data = getDataForNewStorage(storageData);
     if (data) {
         fetch('http://localhost:3000/api/storage', {
             method: 'POST',
@@ -60,8 +61,49 @@ $('.addBtn').on('click', () => {
     }
 });
 
+// UPDATE
+
+$('.showStorage').on('click', '.updStorage', (event) => {
+    let id = $(event.currentTarget.parentElement.parentElement).attr('id');
+    let name = $(`#${id}`).find('.storageName').text();
+    $('.modal').show();
+    $('.modal').attr('id', id);
+    $('.modalName').val(name);
+});
+
+$('.updateModal').on('click', () => {
+    let id = $('.modal').attr('id');
+    const storageData = {
+        modalName: null,
+    };
+    const data = getDataForNewStorage(storageData);
+
+    if (data) {
+        fetch(`http://localhost:3000/api/storage/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: data,
+        })
+            .then($('.modal').hide())
+            .then($('.modal').removeAttr('id'))
+            .then(setTimeout(() => loadStorage(), 100))
+            .catch((error) => console.log(error));
+    } else {
+        console.log('not fetching');
+    }
+});
+
+$('.closeModal').on('click', () => {
+    $('.modal').removeAttr('id');
+    $('.modal').hide();
+});
+
+// DELETE
+
 $('.showStorage').on('click', '.delStorage', (event) => {
-    let id = $(event.currentTarget.parentElement).attr('id');
+    let id = $(event.currentTarget.parentElement.parentElement).attr('id');
     fetch(`http://localhost:3000/api/storage/${id}`, {
         method: 'DELETE',
     })

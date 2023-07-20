@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const { User } = require('../tables/user');
 
 const addNewUser = async (data) => {
@@ -12,12 +12,32 @@ const addNewUser = async (data) => {
 
 const getAllUsers = async () => {
     const users = await User.findAll({
-        attributes: ['user_id', 'login', 'email', 'name', 'is_admin', 'is_deleted'],
+        attributes: [
+            'user_id',
+            'login',
+            'email',
+            'name',
+            'is_admin',
+            'is_deleted',
+        ],
         where: {
             is_deleted: false,
-        }
+        },
     });
     return await users;
+};
+
+const updateUser = async (id, info) => {
+    await User.update(
+        {
+            login: info.modalLogin,
+            email: info.modalEmail,
+            name: info.modalName,
+        },
+        {
+            where: { user_id: id },
+        }
+    );
 };
 
 const deleteUser = async (id) => {
@@ -33,4 +53,5 @@ const deleteUser = async (id) => {
 
 module.exports.addNewUser = addNewUser;
 module.exports.getAllUsers = getAllUsers;
+module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;

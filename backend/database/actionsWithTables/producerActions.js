@@ -17,6 +17,17 @@ const getAllProducer = async () => {
     return await producers;
 };
 
+const updateProducer = async (id, info) => {
+    await Producer.update(
+        {
+            name: info.modalName,
+        },
+        {
+            where: { producer_id: id },
+        }
+    );
+};
+
 const deleteProducer = async (id) => {
     await Producer.update(
         {
@@ -38,4 +49,5 @@ const deleteProducer = async (id) => {
 
 module.exports.addNewProducer = addNewProducer;
 module.exports.getAllProducer = getAllProducer;
+module.exports.updateProducer = updateProducer;
 module.exports.deleteProducer = deleteProducer;
