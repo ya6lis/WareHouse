@@ -1,6 +1,6 @@
 const loadProducer = () => {
     $('.showProducer').empty();
-    fetch('http://localhost:3000/api/producer')
+    fetch('http://localhost:3000/api/v1/producer')
         .then((res) => res.json())
         .then((producers) => {
             producers.forEach((producer) => {
@@ -46,7 +46,7 @@ $('.addBtn').on('click', () => {
     };
     const data = getDataForNewProducer(producerData);
     if (data) {
-        fetch('http://localhost:3000/api/producer', {
+        fetch('http://localhost:3000/api/v1/producer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ $('.updateModal').on('click', () => {
     };
     const data = getDataForNewProducer(producerData);
     if (data) {
-        fetch(`http://localhost:3000/api/producer/${id}`, {
+        fetch(`http://localhost:3000/api/v1/producer/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ $('.closeModal').on('click', () => {
 
 $('.showProducer').on('click', '.delProducer', (event) => {
     let id = $(event.currentTarget.parentElement.parentElement).attr('id');
-    fetch(`http://localhost:3000/api/producer/${id}`, {
+    fetch(`http://localhost:3000/api/v1/producer/${id}`, {
         method: 'DELETE',
     })
         .then(setTimeout(() => loadProducer(), 100))

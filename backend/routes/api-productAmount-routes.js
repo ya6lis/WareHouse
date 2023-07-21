@@ -6,7 +6,9 @@ const {
     returnProductAmounts,
 } = require('../database/actionsWithTables/productAmountActions');
 
-router.post('/api/productAmount', async (req, res) => {
+const url = '/api/v1/productAmount'
+
+router.post(url, async (req, res) => {
     try {
         const data = await addNewProductAmount(req.body);
         res.status(201).send(data);
@@ -15,7 +17,7 @@ router.post('/api/productAmount', async (req, res) => {
     }
 });
 
-router.get('/api/productAmount', async (req, res) => {
+router.get(url, async (req, res) => {
     const productAmounts = await returnProductAmounts();
     await res.send(productAmounts);
 });

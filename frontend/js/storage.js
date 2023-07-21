@@ -1,6 +1,6 @@
 const loadStorage = () => {
     $('.showStorage').empty();
-    fetch('http://localhost:3000/api/storage')
+    fetch('http://localhost:3000/api/v1/storage')
         .then((res) => res.json())
         .then((storages) => {
             storages.forEach((storage) => {
@@ -46,7 +46,7 @@ $('.addBtn').on('click', () => {
     };
     const data = getDataForNewStorage(storageData);
     if (data) {
-        fetch('http://localhost:3000/api/storage', {
+        fetch('http://localhost:3000/api/v1/storage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ $('.updateModal').on('click', () => {
     const data = getDataForNewStorage(storageData);
 
     if (data) {
-        fetch(`http://localhost:3000/api/storage/${id}`, {
+        fetch(`http://localhost:3000/api/v1/storage/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ $('.closeModal').on('click', () => {
 
 $('.showStorage').on('click', '.delStorage', (event) => {
     let id = $(event.currentTarget.parentElement.parentElement).attr('id');
-    fetch(`http://localhost:3000/api/storage/${id}`, {
+    fetch(`http://localhost:3000/api/v1/storage/${id}`, {
         method: 'DELETE',
     })
         .then(setTimeout(() => loadStorage(), 100))

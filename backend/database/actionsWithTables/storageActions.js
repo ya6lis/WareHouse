@@ -1,5 +1,4 @@
 const { Storage } = require('../tables/storage');
-const { Product } = require('../tables/product');
 
 const addNewStorage = async (data) => {
     return await Storage.create({
@@ -15,6 +14,17 @@ const getAllStorages = async () => {
         },
     });
     return await storages;
+};
+
+const getStorage = async (id) => {
+    const storage = await Storage.findAll({
+        attributes: ['storage_id', 'name', 'is_deleted'],
+        where: {
+            storage_id: id,
+            is_deleted: false,
+        },
+    });
+    return await storage;
 };
 
 const updateStorage = async (id, info) => {
@@ -41,5 +51,6 @@ const deleteStorage = async (id) => {
 
 module.exports.addNewStorage = addNewStorage;
 module.exports.getAllStorages = getAllStorages;
+module.exports.getStorage = getStorage;
 module.exports.updateStorage = updateStorage;
 module.exports.deleteStorage = deleteStorage;

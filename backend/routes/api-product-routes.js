@@ -4,11 +4,14 @@ const router = express.Router();
 const {
     addNewProduct,
     getAllProducts,
+    getProduct,
     updateProduct,
     deleteProduct,
 } = require('../database/actionsWithTables/productActions');
 
-router.post('/api/product', async (req, res) => {
+const url = '/api/v1/product'
+
+router.post(url, async (req, res) => {
     try {
         const data = await addNewProduct(req.body);
         res.status(201).send(data);
@@ -17,12 +20,17 @@ router.post('/api/product', async (req, res) => {
     }
 });
 
-router.get('/api/product', async (req, res) => {
+router.get(url, async (req, res) => {
     const products = await getAllProducts();
     await res.send(products);
 });
 
-router.patch('/api/product/:id', async (req, res) => {
+router.get(`${url}/:id`, async (req, res) => {
+    const product = await getProduct(req.params.id);
+    await res.send(product);
+});
+
+router.patch(`${url}/:id`, async (req, res) => {
     try {
         const productInfo = await updateProduct(req.params.id, req.body);
         res.status(200).send(productInfo);
@@ -31,7 +39,7 @@ router.patch('/api/product/:id', async (req, res) => {
     }
 });
 
-router.delete('/api/product/:id', async (req, res) => {
+router.delete(`${url}/:id`, async (req, res) => {
     const userId = await deleteProduct(req.params.id);
     res.status(200).send(userId);
   });

@@ -3,12 +3,15 @@ const router = express.Router();
 
 const {
     addNewProducer,
-    getAllProducer,
+    getAllProducers,
+    getProducer,
     updateProducer,
     deleteProducer,
 } = require('../database/actionsWithTables/producerActions');
 
-router.post('/api/producer', async (req, res) => {
+const url = '/api/v1/producer'
+
+router.post(url, async (req, res) => {
     try {
         const data = await addNewProducer(req.body);
         res.status(201).send(data);
@@ -17,12 +20,17 @@ router.post('/api/producer', async (req, res) => {
     }
 });
 
-router.get('/api/producer', async (req, res) => {
-    const producers = await getAllProducer();
+router.get(url, async (req, res) => {
+    const producers = await getAllProducers();
     await res.send(producers);
 });
 
-router.patch('/api/producer/:id', async (req, res) => {
+router.get(`${url}/:id`, async (req, res) => {
+    const producer = await getProducer(req.params.id);
+    await res.send(producer);
+});
+
+router.patch(`${url}/:id`, async (req, res) => {
     try {
         const producerInfo = await updateProducer(req.params.id, req.body);
         res.status(200).send(producerInfo);
@@ -31,7 +39,7 @@ router.patch('/api/producer/:id', async (req, res) => {
     }
 });
 
-router.delete(`/api/producer/:id`, async (req, res) => {
+router.delete(`${url}/:id`, async (req, res) => {
     const producerId = await deleteProducer(req.params.id);
     res.status(200).send(producerId);
 });

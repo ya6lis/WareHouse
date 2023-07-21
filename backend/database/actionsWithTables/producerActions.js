@@ -7,7 +7,7 @@ const addNewProducer = async (data) => {
     });
 };
 
-const getAllProducer = async () => {
+const getAllProducers = async () => {
     const producers = await Producer.findAll({
         attributes: ['producer_id', 'name', 'is_deleted'],
         where: {
@@ -15,6 +15,17 @@ const getAllProducer = async () => {
         },
     });
     return await producers;
+};
+
+const getProducer = async (id) => {
+    const producer = await Producer.findAll({
+        attributes: ['producer_id', 'name', 'is_deleted'],
+        where: {
+            producer_id: id,
+            is_deleted: false,
+        },
+    });
+    return await producer;
 };
 
 const updateProducer = async (id, info) => {
@@ -48,6 +59,7 @@ const deleteProducer = async (id) => {
 };
 
 module.exports.addNewProducer = addNewProducer;
-module.exports.getAllProducer = getAllProducer;
+module.exports.getAllProducers = getAllProducers;
+module.exports.getProducer = getProducer;
 module.exports.updateProducer = updateProducer;
 module.exports.deleteProducer = deleteProducer;

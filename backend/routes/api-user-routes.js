@@ -4,11 +4,14 @@ const router = express.Router();
 const {
     addNewUser,
     getAllUsers,
+    getUser,
     updateUser,
     deleteUser,
 } = require('../database/actionsWithTables/userActions');
 
-router.post('/api/user', async (req, res) => {
+const url = '/api/v1/user'
+
+router.post(url, async (req, res) => {
     try {
         const data = await addNewUser(req.body);
         res.status(201).send(data)
@@ -17,12 +20,17 @@ router.post('/api/user', async (req, res) => {
     }
 });
 
-router.get('/api/user', async (req, res) => {
+router.get(url, async (req, res) => {
     const users = await getAllUsers();
     await res.send(users);
 });
 
-router.patch('/api/user/:id', async (req, res) => {
+router.get(`${url}/:id`, async (req, res) => {
+    const user = await getUser(req.params.id);
+    await res.send(user);
+});
+
+router.patch(`${url}/:id`, async (req, res) => {
     try {
         const userInfo = await updateUser(req.params.id, req.body);
         res.status(200).send(userInfo);
@@ -31,7 +39,7 @@ router.patch('/api/user/:id', async (req, res) => {
     }
 });
 
-router.delete('/api/user/:id', async (req, res) => {
+router.delete(`${url}/:id`, async (req, res) => {
     const userId = await deleteUser(req.params.id);
     res.status(200).send(userId)
 });

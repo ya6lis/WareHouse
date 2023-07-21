@@ -1,6 +1,6 @@
 const loadUser = () => {
     $('.showUser').empty();
-    fetch('http://localhost:3000/api/user')
+    fetch('http://localhost:3000/api/v1/user')
         .then((res) => res.json())
         .then((users) => {
             users.forEach((user) => {
@@ -54,7 +54,7 @@ $('.addBtn').on('click', () => {
     const data = getDataForNewUser(userData);
 
     if (data) {
-        fetch('http://localhost:3000/api/user', {
+        fetch('http://localhost:3000/api/v1/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,8 +81,6 @@ $('.showUser').on('click', '.updUser', (event) => {
     $('.modalLogin').val(login);
     $('.modalEmail').val(email);
     $('.modalName').val(name);
-
-    console.log(id, login, email, name)
 });
 
 $('.updateModal').on('click', () => {
@@ -95,7 +93,7 @@ $('.updateModal').on('click', () => {
     const data = getDataForNewUser(userUpdData);
     
     if (data) {
-        fetch(`http://localhost:3000/api/user/${id}`, {
+        fetch(`http://localhost:3000/api/v1/user/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -120,7 +118,7 @@ $('.closeModal').on('click', () => {
 
 $('.showUser').on('click', '.delUser', (event) => {
     let id = $(event.currentTarget.parentElement.parentElement).attr('id')
-    fetch(`http://localhost:3000/api/user/${id}`, {
+    fetch(`http://localhost:3000/api/v1/user/${id}`, {
         method: 'DELETE',
     })
         .then(setTimeout(() => loadUser(), 100))

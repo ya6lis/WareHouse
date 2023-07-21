@@ -1,5 +1,5 @@
 const { Product } = require('../tables/product');
-const { Subcategorie } = require('../tables/subcategorie');
+const { Subcategory } = require('../tables/subcategory');
 const { Producer } = require('../tables/producer');
 
 const { addNewProductAmount } = require('./productAmountActions');
@@ -9,7 +9,7 @@ const addNewProduct = async (data) => {
         name: data.name,
         price: data.price,
         unit: data.unit,
-        subcategorie_id: data.subcategorie_id,
+        subcategory_id: data.subcategory_id,
         producer_id: data.producer_id,
     });
     let dataForProductAmount = {
@@ -28,7 +28,7 @@ const getAllProducts = async () => {
         },
         include: [
             {
-                model: Subcategorie,
+                model: Subcategory,
                 where: {
                     is_deleted: false,
                 },
@@ -44,13 +44,38 @@ const getAllProducts = async () => {
     return await products;
 };
 
+const getProduct = async (id) => {
+    const product = await Product.findAll({
+        attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted'],
+        where: {
+            product_id: id,
+            is_deleted: false,
+        },
+        include: [
+            {
+                model: Subcategory,
+                where: {
+                    is_deleted: false,
+                },
+            },
+            {
+                model: Producer,
+                where: {
+                    is_deleted: false,
+                },
+            },
+        ],
+    });
+    return await product;
+};
+
 const updateProduct = async (id, info) => {
     await Product.update(
         {
             name: info.modalName,
             price: info.modalPrice,
             unit: info.unit,
-            subcategorie_id: info.subcategorie_id,
+            subcategory_id: info.subcategory_id,
             producer_id: info.producer_id,
         },
         {
@@ -72,5 +97,6 @@ const deleteProduct = async (id) => {
 
 module.exports.addNewProduct = addNewProduct;
 module.exports.getAllProducts = getAllProducts;
+module.exports.getProduct = getProduct;
 module.exports.updateProduct = updateProduct;
 module.exports.deleteProduct = deleteProduct;

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Subcategorie</title>
+        <title>Category</title>
         <link rel="stylesheet" href="../assets/styles/bootstrap.min.css" />
         <link
             rel="stylesheet"
@@ -21,12 +21,8 @@
                     </label>
                 </div>
                 <div>
-                    <label for="modalCategorie">Choose a main categorie:</label>
-                    <select name="modalCategorie" class="modalCategorie"></select>
-                </div>
-                <div>
                     <button type="button" class="updateModal">
-                        Update Categorie
+                        Update Category
                     </button>
                     <button type="button" class="closeModal">
                         Close Modal
@@ -44,26 +40,19 @@
             >
                 <div class="form-info">
                     <label
-                        >Subcategorie name
+                        >Category name
                         <input type="text" name="name" />
                     </label>
                 </div>
-                <div>
-                    <label for="categorie">Choose a main categorie:</label>
-                    <select name="categorie" class="categorie"></select>
-                </div>
-
-                <button type="button" class="addBtn">
-                    Add New Subcategorie
-                </button>
+                <button type="button" class="addBtn">Add New Category</button>
             </form>
         </div>
 
         <div class="container py-3">
-            <div class="showSubcategorie row"></div>
+            <div class="showCategory row"></div>
         </div>
 
         <script src="../js/code.jquery.com_jquery-3.7.0.min.js"></script>
-        <script src="../js/subcategorie.js"></script>
+        <script src="../js/category.js"></script>
     </body>
 </html>

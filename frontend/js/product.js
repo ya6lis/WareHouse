@@ -1,11 +1,11 @@
 const loadProduct = () => {
     $('.showProduct').empty();
-    $('.subcategorie').empty();
+    $('.subcategory').empty();
     $('.producer').empty();
     $('.storage').empty();
-    $('.modalSubcategorie').empty();
+    $('.modalSubcategory').empty();
     $('.modalProducer').empty();
-    fetch('http://localhost:3000/api/product')
+    fetch('http://localhost:3000/api/v1/product')
         .then((res) => res.json())
         .then((products) => {
             products.forEach((product) => {
@@ -15,8 +15,8 @@ const loadProduct = () => {
                 <div class="productInfo">name: <span class="productName">${product.name}</span></div>
                 <div class="productInfo">price: <span class="productPrice">${product.price}</span></div>
                 <div class="productInfo">unit: <span class="productUnit">${product.unit}</span></div>
-                <div class="productInfo">subcategorie: <span class="productSubcategorie">${product.subcategorie.name}</span></div>
-                <div class="productInfo">producer: <span class="productProducer">${product.producer.name}</span></div>
+                <div class="productInfo">subcategory: <span class="productSubcategory" id="${product.subcategory.subcategory_id}">${product.subcategory.name}</span></div>
+                <div class="productInfo">producer: <span class="productProducer" id="${product.producer.producer_id}">${product.producer.name}</span></div>
                 <div class="productInfo">is_deleted: ${product.is_deleted}</div>
                 <div>
                     <button type="button" class="updProduct">Update Product</button>
@@ -27,21 +27,21 @@ const loadProduct = () => {
         })
         .catch((error) => console.log(error));
 
-    fetch('http://localhost:3000/api/subcategorie')
+    fetch('http://localhost:3000/api/v1/subcategory')
         .then((res) => res.json())
         .then((subcategories) => {
-            subcategories.forEach((subcategorie) => {
-                $('.subcategorie').append(`
-                        <option value="${subcategorie.subcategorie_id}">${subcategorie.name}</option>
+            subcategories.forEach((subcategory) => {
+                $('.subcategory').append(`
+                        <option value="${subcategory.subcategory_id}">${subcategory.name}</option>
                     `);
-                $('.modalSubcategorie').append(`
-                        <option value="${subcategorie.subcategorie_id}">${subcategorie.name}</option>
+                $('.modalSubcategory').append(`
+                        <option value="${subcategory.subcategory_id}">${subcategory.name}</option>
                     `);
             });
         })
         .catch((error) => console.log(error));
 
-    fetch('http://localhost:3000/api/producer')
+    fetch('http://localhost:3000/api/v1/producer')
         .then((res) => res.json())
         .then((producers) => {
             producers.forEach((producer) => {
@@ -55,7 +55,7 @@ const loadProduct = () => {
         })
         .catch((error) => console.log(error));
 
-    fetch('http://localhost:3000/api/storage')
+    fetch('http://localhost:3000/api/v1/storage')
         .then((res) => res.json())
         .then((storages) => {
             storages.forEach((storage) => {
@@ -98,13 +98,13 @@ $('.addBtn').on('click', () => {
 
     getDataForNewProduct(productData);
     productData.unit = $('.unit option:selected').text();
-    productData.subcategorie_id = $('.subcategorie option:selected').val();
+    productData.subcategory_id = $('.subcategory option:selected').val();
     productData.producer_id = $('.producer option:selected').val();
     productData.storage_id = $('.storage option:selected').val();
     const data = JSON.stringify(productData);
 
     if (data) {
-        fetch('http://localhost:3000/api/product', {
+        fetch('http://localhost:3000/api/v1/product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -124,11 +124,15 @@ $('.addBtn').on('click', () => {
 $('.showProduct').on('click', '.updProduct', (event) => {
     let id = $(event.currentTarget.parentElement.parentElement).attr('id');
     let name = $(`#${id}`).find('.productName').text();
-    let categorie_id = $(`#${id}`).find('.productCategorie').attr('id');
+    let price = $(`#${id}`).find('.productPrice').text();
+    let subcategory_id = $(`#${id}`).find('.productSubcategory').attr('id');
+    let producer_id = $(`#${id}`).find('.productProducer').attr('id');
     $('.modal').show();
     $('.modal').attr('id', id);
     $('.modalName').val(name);
-    $('.modalCategorie').val(categorie_id);
+    $('.modalPrice').val(price);
+    $('.modalSubcategory').val(subcategory_id);
+    $('.modalProducer').val(producer_id);
 });
 
 $('.updateModal').on('click', () => {
@@ -140,14 +144,14 @@ $('.updateModal').on('click', () => {
 
     getDataForNewProduct(productUpdData);
     productUpdData.unit = $('.modalUnit option:selected').text();
-    productUpdData.subcategorie_id = $(
-        '.modalSubcategorie option:selected'
+    productUpdData.subcategory_id = $(
+        '.modalSubcategory option:selected'
     ).val();
     productUpdData.producer_id = $('.modalProducer option:selected').val();
     const data = JSON.stringify(productUpdData);
 
     if (data) {
-        fetch(`http://localhost:3000/api/product/${id}`, {
+        fetch(`http://localhost:3000/api/v1/product/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -172,7 +176,7 @@ $('.closeModal').on('click', () => {
 
 $('.showProduct').on('click', '.delProduct', (event) => {
     let id = $(event.currentTarget.parentElement.parentElement).attr('id');
-    fetch(`http://localhost:3000/api/product/${id}`, {
+    fetch(`http://localhost:3000/api/v1/product/${id}`, {
         method: 'DELETE',
     })
         .then(setTimeout(() => loadProduct(), 100))

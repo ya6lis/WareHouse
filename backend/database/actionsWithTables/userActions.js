@@ -27,6 +27,24 @@ const getAllUsers = async () => {
     return await users;
 };
 
+const getUser = async (id) => {
+    const user = await User.findAll({
+        attributes: [
+            'user_id',
+            'login',
+            'email',
+            'name',
+            'is_admin',
+            'is_deleted',
+        ],
+        where: {
+            user_id: id,
+            is_deleted: false,
+        },
+    });
+    return await user;
+};
+
 const updateUser = async (id, info) => {
     await User.update(
         {
@@ -53,5 +71,6 @@ const deleteUser = async (id) => {
 
 module.exports.addNewUser = addNewUser;
 module.exports.getAllUsers = getAllUsers;
+module.exports.getUser = getUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
