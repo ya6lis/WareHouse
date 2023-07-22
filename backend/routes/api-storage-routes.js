@@ -1,5 +1,6 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router()
+const {sendError} = require('../util/sendError');
 
 const {
     addNewStorage,
@@ -16,11 +17,7 @@ router.post(url, async (req, res) => {
         const data = await addNewStorage(req.body);
         res.status(201).send(data);
     } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(409).send({ message: 'The name already exists!' });
-        } else {
-            res.status(404).send({ message: 'Not found!' });
-        }
+        sendError(res, error);
     }
 });
 
@@ -29,7 +26,7 @@ router.get(url, async (req, res) => {
         const storages = await getAllStorages();
         await res.send(storages);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 
@@ -38,7 +35,7 @@ router.get(`${url}/:id`, async (req, res) => {
         const storage = await getStorage(req.params.id);
         await res.send(storage);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 
@@ -47,11 +44,7 @@ router.patch(`${url}/:id`, async (req, res) => {
         const storageInfo = await updateStorage(req.params.id, req.body);
         res.status(200).send(storageInfo);
     } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(409).send({ message: 'The name already exists!' });
-        } else {
-            res.status(404).send({ message: 'Not found!' });
-        }
+        sendError(res, error);
     }
 });
 
@@ -60,7 +53,7 @@ router.delete(`${url}/:id`, async (req, res) => {
         const storageId = await deleteStorage(req.params.id);
         res.status(200).send(storageId);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 

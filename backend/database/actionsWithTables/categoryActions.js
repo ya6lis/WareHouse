@@ -9,23 +9,16 @@ const addNewCategory = async (data) => {
 };
 
 const getAllCategories = async () => {
-    const categories = await Category.findAll({
+    return await Category.findAll({
         attributes: ['category_id', 'name', 'is_deleted'],
         where: {
             is_deleted: false,
         },
     });
-    return await categories;
 };
 
 const getCategory = async (id) => {
-    const category = await Category.findAll({
-        attributes: ['category_id', 'name', 'is_deleted'],
-        where: {
-            category_id: id,
-        },
-    });
-    return await category;
+    return await Category.findByPk(id, {attributes: ['category_id', 'name', 'is_deleted']});
 };
 
 const updateCategory = async (id, info) => {

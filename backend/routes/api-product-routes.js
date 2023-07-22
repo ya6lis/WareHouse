@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {sendError} = require('../util/sendError');
 
 const {
     addNewProduct,
@@ -16,11 +17,7 @@ router.post(url, async (req, res) => {
         const data = await addNewProduct(req.body);
         res.status(201).send(data);
     } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(409).send({ message: 'The name already exists!' });
-        } else {
-            res.status(404).send({ message: 'Not found!' });
-        }
+        sendError(res, error);
     }
 });
 
@@ -29,7 +26,7 @@ router.get(url, async (req, res) => {
         const products = await getAllProducts();
         await res.send(products);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 
@@ -38,7 +35,7 @@ router.get(`${url}/:id`, async (req, res) => {
         const product = await getProduct(req.params.id);
         await res.send(product);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 
@@ -47,11 +44,7 @@ router.patch(`${url}/:id`, async (req, res) => {
         const productInfo = await updateProduct(req.params.id, req.body);
         res.status(200).send(productInfo);
     } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(409).send({ message: 'The name already exists!' });
-        } else {
-            res.status(404).send({ message: 'Not found!' });
-        }
+        sendError(res, error);
     }
 });
 
@@ -60,7 +53,7 @@ router.delete(`${url}/:id`, async (req, res) => {
         const userId = await deleteProduct(req.params.id);
         res.status(200).send(userId);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 

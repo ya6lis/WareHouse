@@ -21,7 +21,7 @@ const addNewProduct = async (data) => {
 };
 
 const getAllProducts = async () => {
-    const products = await Product.findAll({
+    return await Product.findAll({
         attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted'],
         where: {
             is_deleted: false,
@@ -41,31 +41,10 @@ const getAllProducts = async () => {
             },
         ],
     });
-    return await products;
 };
 
 const getProduct = async (id) => {
-    const product = await Product.findAll({
-        attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted'],
-        where: {
-            product_id: id,
-        },
-        include: [
-            {
-                model: Subcategory,
-                where: {
-                    is_deleted: false,
-                },
-            },
-            {
-                model: Producer,
-                where: {
-                    is_deleted: false,
-                },
-            },
-        ],
-    });
-    return await product;
+    return await Product.findByPk(id, {attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted']});
 };
 
 const updateProduct = async (id, info) => {

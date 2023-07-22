@@ -8,23 +8,16 @@ const addNewProducer = async (data) => {
 };
 
 const getAllProducers = async () => {
-    const producers = await Producer.findAll({
+    return await Producer.findAll({
         attributes: ['producer_id', 'name', 'is_deleted'],
         where: {
             is_deleted: false,
         },
     });
-    return await producers;
 };
 
 const getProducer = async (id) => {
-    const producer = await Producer.findAll({
-        attributes: ['producer_id', 'name', 'is_deleted'],
-        where: {
-            producer_id: id,
-        },
-    });
-    return await producer;
+    return await Producer.findByPk(id, {attributes: ['producer_id', 'name', 'is_deleted']});
 };
 
 const updateProducer = async (id, info) => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {sendError} = require('../util/sendError');
 
 const {
     addNewProductAmount,
@@ -13,11 +14,7 @@ router.post(url, async (req, res) => {
         const data = await addNewProductAmount(req.body);
         res.status(201).send(data);
     } catch (error) {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(409).send({ message: 'Bad value!' });
-        } else {
-            res.status(404).send({ message: 'Not found!' });
-        }
+        sendError(res, error);
     }
 });
 
@@ -26,7 +23,7 @@ router.get(url, async (req, res) => {
         const productAmounts = await returnProductAmounts();
         await res.send(productAmounts);
     } catch (error) {
-        res.status(404).send({ message: 'Not found!' });
+        sendError(res, error);
     }
 });
 

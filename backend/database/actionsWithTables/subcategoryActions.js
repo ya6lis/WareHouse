@@ -14,7 +14,7 @@ const addNewSubcategory = async (data) => {
 };
 
 const getAllSubcategories = async () => {
-    const subcategories = await Subcategory.findAll({
+    return await Subcategory.findAll({
         attributes: ['subcategory_id', 'name', 'is_deleted'],
         where: {
             is_deleted: false,
@@ -28,25 +28,10 @@ const getAllSubcategories = async () => {
             },
         ],
     });
-    return await subcategories;
 };
 
 const getSubcategory = async (id) => {
-    const subcategory = await Subcategory.findAll({
-        attributes: ['subcategory_id', 'name', 'is_deleted'],
-        where: {
-            subcategory_id: id,
-        },
-        include: [
-            {
-                model: Category,
-                where: {
-                    is_deleted: false,
-                },
-            },
-        ],
-    });
-    return await subcategory;
+    return await Subcategory.findByPk(id, {attributes: ['subcategory_id', 'name', 'is_deleted']});
 };
 
 const updateSubcategory = async (id, info) => {

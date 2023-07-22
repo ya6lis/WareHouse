@@ -7,23 +7,16 @@ const addNewStorage = async (data) => {
 };
 
 const getAllStorages = async () => {
-    const storages = await Storage.findAll({
+    return await Storage.findAll({
         attributes: ['storage_id', 'name', 'is_deleted'],
         where: {
             is_deleted: false,
         },
     });
-    return await storages;
 };
 
 const getStorage = async (id) => {
-    const storage = await Storage.findAll({
-        attributes: ['storage_id', 'name', 'is_deleted'],
-        where: {
-            storage_id: id,
-        },
-    });
-    return await storage;
+    return await Storage.findByPk(id, {attributes: ['storage_id', 'name', 'is_deleted']});
 };
 
 const updateStorage = async (id, info) => {

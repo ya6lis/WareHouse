@@ -11,7 +11,7 @@ const addNewUser = async (data) => {
 };
 
 const getAllUsers = async () => {
-    const users = await User.findAll({
+    return await User.findAll({
         attributes: [
             'user_id',
             'login',
@@ -24,23 +24,20 @@ const getAllUsers = async () => {
             is_deleted: false,
         },
     });
-    return await users;
 };
 
 const getUser = async (id) => {
-    const user = await User.findAll({
-        attributes: [
-            'user_id',
-            'login',
-            'email',
-            'name',
-            'is_admin',
-            'is_deleted',
-        ],
-        where: {
-            user_id: id,
-        },
-    });
+    const user = await User.findByPk(id, {attributes: [
+        'user_id',
+        'login',
+        'email',
+        'name',
+        'is_admin',
+        'is_deleted',
+    ]});
+    if ((await user) === null) {
+        throw new Error('Sequelize not found an object!');
+    }
     return await user;
 };
 
@@ -74,4 +71,4 @@ module.exports = {
     getUser,
     updateUser,
     deleteUser,
-}
+};
