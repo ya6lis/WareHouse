@@ -44,7 +44,11 @@ const getAllProducts = async () => {
 };
 
 const getProduct = async (id) => {
-    return await Product.findByPk(id, {attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted']});
+    const product = await Product.findByPk(id, {attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted']});
+    if (!product) {
+        throw new Error('Sequelize not found an object!');
+    }
+    return product;
 };
 
 const updateProduct = async (id, info) => {

@@ -35,10 +35,10 @@ const getUser = async (id) => {
         'is_admin',
         'is_deleted',
     ]});
-    if ((await user) === null) {
+    if (!user) {
         throw new Error('Sequelize not found an object!');
     }
-    return await user;
+    return user;
 };
 
 const updateUser = async (id, info) => {

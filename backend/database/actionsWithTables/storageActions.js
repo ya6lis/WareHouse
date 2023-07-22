@@ -16,7 +16,11 @@ const getAllStorages = async () => {
 };
 
 const getStorage = async (id) => {
-    return await Storage.findByPk(id, {attributes: ['storage_id', 'name', 'is_deleted']});
+    const storage = await Storage.findByPk(id, {attributes: ['storage_id', 'name', 'is_deleted']});
+    if (!storage) {
+        throw new Error('Sequelize not found an object!');
+    }
+    return storage;
 };
 
 const updateStorage = async (id, info) => {

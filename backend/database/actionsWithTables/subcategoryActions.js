@@ -31,7 +31,11 @@ const getAllSubcategories = async () => {
 };
 
 const getSubcategory = async (id) => {
-    return await Subcategory.findByPk(id, {attributes: ['subcategory_id', 'name', 'is_deleted']});
+    const subcategory = await Subcategory.findByPk(id, {attributes: ['subcategory_id', 'name', 'is_deleted']});
+    if (!subcategory) {
+        throw new Error('Sequelize not found an object!');
+    }
+    return subcategory;
 };
 
 const updateSubcategory = async (id, info) => {

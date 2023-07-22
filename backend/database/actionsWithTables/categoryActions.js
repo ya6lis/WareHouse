@@ -18,7 +18,11 @@ const getAllCategories = async () => {
 };
 
 const getCategory = async (id) => {
-    return await Category.findByPk(id, {attributes: ['category_id', 'name', 'is_deleted']});
+    const category = await Category.findByPk(id, {attributes: ['category_id', 'name', 'is_deleted']});
+    if (!category) {
+        throw new Error('Sequelize not found an object!');
+    }
+    return category;
 };
 
 const updateCategory = async (id, info) => {
