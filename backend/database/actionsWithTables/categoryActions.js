@@ -1,5 +1,6 @@
 const { Category } = require('../tables/category');
 const { Subcategory } = require('../tables/subcategory');
+const { Product } = require('../tables/product');
 
 const addNewCategory = async (data) => {
     return await Category.create({
@@ -55,6 +56,26 @@ const deleteCategory = async (id) => {
             where: { category_id: id },
         }
     );
+    // DELETING PRODUCTS
+    try {
+        const data = await Subcategory.findAll({
+            attributes: ['subcategory_id'],
+            where: { category_id: id },
+        });
+        data.forEach(async (e) => {
+            console.log(e.dataValues.subcategory_id);
+            await Product.update(
+                {
+                    is_deleted: true,
+                },
+                {
+                    where: { subcategory_id: e.dataValues.subcategory_id },
+                }
+            );
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 module.exports = {
@@ -63,4 +84,4 @@ module.exports = {
     getCategory,
     updateCategory,
     deleteCategory,
-}
+};
