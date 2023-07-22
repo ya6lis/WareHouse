@@ -9,7 +9,7 @@ const {
     deleteCategory,
 } = require('../database/actionsWithTables/categoryActions');
 
-const url = '/api/v1/category'
+const url = '/api/v1/category';
 
 router.post(url, async (req, res) => {
     try {
@@ -21,13 +21,21 @@ router.post(url, async (req, res) => {
 });
 
 router.get(url, async (req, res) => {
-    const categories = await getAllCategories();
-    await res.send(categories);
+    try {
+        const categories = await getAllCategories();
+        await res.send(categories);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 router.get(`${url}/:id`, async (req, res) => {
-    const category = await getCategory(req.params.id);
-    await res.send(category);
+    try {
+        const category = await getCategory(req.params.id);
+        await res.send(category);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 router.patch(`${url}/:id`, async (req, res) => {
@@ -40,8 +48,12 @@ router.patch(`${url}/:id`, async (req, res) => {
 });
 
 router.delete(`${url}/:id`, async (req, res) => {
-    const categoryId = await deleteCategory(req.params.id);
-    res.status(200).send(categoryId);
+    try {
+        const categoryId = await deleteCategory(req.params.id);
+        res.status(200).send(categoryId);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 module.exports = router;

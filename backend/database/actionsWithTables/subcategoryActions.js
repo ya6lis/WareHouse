@@ -36,7 +36,6 @@ const getSubcategory = async (id) => {
         attributes: ['subcategory_id', 'name', 'is_deleted'],
         where: {
             subcategory_id: id,
-            is_deleted: false,
         },
         include: [
             {
@@ -81,8 +80,10 @@ const deleteSubcategory = async (id) => {
     );
 };
 
-module.exports.addNewSubcategory = addNewSubcategory;
-module.exports.getAllSubcategories = getAllSubcategories;
-module.exports.getSubcategory = getSubcategory;
-module.exports.updateSubcategory = updateSubcategory;
-module.exports.deleteSubcategory = deleteSubcategory;
+module.exports = {
+    addNewSubcategory,
+    getAllSubcategories,
+    getSubcategory,
+    updateSubcategory,
+    deleteSubcategory,
+}

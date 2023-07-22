@@ -9,7 +9,7 @@ const {
     deleteStorage,
 } = require('../database/actionsWithTables/storageActions');
 
-const url = '/api/v1/storage'
+const url = '/api/v1/storage';
 
 router.post(url, async (req, res) => {
     try {
@@ -21,13 +21,21 @@ router.post(url, async (req, res) => {
 });
 
 router.get(url, async (req, res) => {
-    const storages = await getAllStorages();
-    await res.send(storages);
+    try {
+        const storages = await getAllStorages();
+        await res.send(storages);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 router.get(`${url}/:id`, async (req, res) => {
-    const storage = await getStorage(req.params.id);
-    await res.send(storage);
+    try {
+        const storage = await getStorage(req.params.id);
+        await res.send(storage);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 router.patch(`${url}/:id`, async (req, res) => {
@@ -40,8 +48,12 @@ router.patch(`${url}/:id`, async (req, res) => {
 });
 
 router.delete(`${url}/:id`, async (req, res) => {
-    const storageId = await deleteStorage(req.params.id);
-    res.status(200).send(storageId);
+    try {
+        const storageId = await deleteStorage(req.params.id);
+        res.status(200).send(storageId);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 module.exports = router;

@@ -39,7 +39,6 @@ const getUser = async (id) => {
         ],
         where: {
             user_id: id,
-            is_deleted: false,
         },
     });
     return await user;
@@ -69,8 +68,10 @@ const deleteUser = async (id) => {
     );
 };
 
-module.exports.addNewUser = addNewUser;
-module.exports.getAllUsers = getAllUsers;
-module.exports.getUser = getUser;
-module.exports.updateUser = updateUser;
-module.exports.deleteUser = deleteUser;
+module.exports = {
+    addNewUser,
+    getAllUsers,
+    getUser,
+    updateUser,
+    deleteUser,
+}

@@ -21,7 +21,6 @@ const getStorage = async (id) => {
         attributes: ['storage_id', 'name', 'is_deleted'],
         where: {
             storage_id: id,
-            is_deleted: false,
         },
     });
     return await storage;
@@ -49,8 +48,10 @@ const deleteStorage = async (id) => {
     );
 };
 
-module.exports.addNewStorage = addNewStorage;
-module.exports.getAllStorages = getAllStorages;
-module.exports.getStorage = getStorage;
-module.exports.updateStorage = updateStorage;
-module.exports.deleteStorage = deleteStorage;
+module.exports = {
+    addNewStorage,
+    getAllStorages,
+    getStorage,
+    updateStorage,
+    deleteStorage,
+}

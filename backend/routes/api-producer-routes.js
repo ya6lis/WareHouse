@@ -9,7 +9,7 @@ const {
     deleteProducer,
 } = require('../database/actionsWithTables/producerActions');
 
-const url = '/api/v1/producer'
+const url = '/api/v1/producer';
 
 router.post(url, async (req, res) => {
     try {
@@ -21,13 +21,21 @@ router.post(url, async (req, res) => {
 });
 
 router.get(url, async (req, res) => {
-    const producers = await getAllProducers();
-    await res.send(producers);
+    try {
+        const producers = await getAllProducers();
+        await res.send(producers);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 router.get(`${url}/:id`, async (req, res) => {
-    const producer = await getProducer(req.params.id);
-    await res.send(producer);
+    try {
+        const producer = await getProducer(req.params.id);
+        await res.send(producer);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 router.patch(`${url}/:id`, async (req, res) => {
@@ -40,8 +48,12 @@ router.patch(`${url}/:id`, async (req, res) => {
 });
 
 router.delete(`${url}/:id`, async (req, res) => {
-    const producerId = await deleteProducer(req.params.id);
-    res.status(200).send(producerId);
+    try {
+        const producerId = await deleteProducer(req.params.id);
+        res.status(200).send(producerId);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 module.exports = router;

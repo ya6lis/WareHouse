@@ -49,7 +49,6 @@ const getProduct = async (id) => {
         attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted'],
         where: {
             product_id: id,
-            is_deleted: false,
         },
         include: [
             {
@@ -95,8 +94,10 @@ const deleteProduct = async (id) => {
     );
 };
 
-module.exports.addNewProduct = addNewProduct;
-module.exports.getAllProducts = getAllProducts;
-module.exports.getProduct = getProduct;
-module.exports.updateProduct = updateProduct;
-module.exports.deleteProduct = deleteProduct;
+module.exports = {
+    addNewProduct,
+    getAllProducts,
+    getProduct,
+    updateProduct,
+    deleteProduct,
+}

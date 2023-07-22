@@ -22,7 +22,6 @@ const getProducer = async (id) => {
         attributes: ['producer_id', 'name', 'is_deleted'],
         where: {
             producer_id: id,
-            is_deleted: false,
         },
     });
     return await producer;
@@ -58,8 +57,10 @@ const deleteProducer = async (id) => {
     );
 };
 
-module.exports.addNewProducer = addNewProducer;
-module.exports.getAllProducers = getAllProducers;
-module.exports.getProducer = getProducer;
-module.exports.updateProducer = updateProducer;
-module.exports.deleteProducer = deleteProducer;
+module.exports = {
+    addNewProducer,
+    getAllProducers,
+    getProducer,
+    updateProducer,
+    deleteProducer,
+}

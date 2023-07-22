@@ -22,7 +22,6 @@ const getCategory = async (id) => {
         attributes: ['category_id', 'name', 'is_deleted'],
         where: {
             category_id: id,
-            is_deleted: false,
         },
     });
     return await category;
@@ -58,8 +57,10 @@ const deleteCategory = async (id) => {
     );
 };
 
-module.exports.addNewCategory = addNewCategory;
-module.exports.getAllCategories = getAllCategories;
-module.exports.getCategory = getCategory;
-module.exports.updateCategory = updateCategory;
-module.exports.deleteCategory = deleteCategory;
+module.exports = {
+    addNewCategory,
+    getAllCategories,
+    getCategory,
+    updateCategory,
+    deleteCategory,
+}

@@ -15,5 +15,7 @@ const returnProductAmounts = async () => {
     return await productAmounts;
 };
 
-module.exports.addNewProductAmount = addNewProductAmount;
-module.exports.returnProductAmounts = returnProductAmounts;
+module.exports = {
+    addNewProductAmount,
+    returnProductAmounts,
+}

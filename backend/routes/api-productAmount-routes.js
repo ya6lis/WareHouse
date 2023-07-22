@@ -6,7 +6,7 @@ const {
     returnProductAmounts,
 } = require('../database/actionsWithTables/productAmountActions');
 
-const url = '/api/v1/productAmount'
+const url = '/api/v1/productAmount';
 
 router.post(url, async (req, res) => {
     try {
@@ -18,8 +18,12 @@ router.post(url, async (req, res) => {
 });
 
 router.get(url, async (req, res) => {
-    const productAmounts = await returnProductAmounts();
-    await res.send(productAmounts);
+    try {
+        const productAmounts = await returnProductAmounts();
+        await res.send(productAmounts);
+    } catch (error) {
+        res.status(404).send({ message: 'Not found!' });
+    }
 });
 
 module.exports = router;
