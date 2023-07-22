@@ -16,7 +16,11 @@ router.post(url, async (req, res) => {
         const data = await addNewSubcategory(req.body);
         res.status(201).send(data);
     } catch (error) {
-        res.status(400).send({ message: 'The name already exists!' });
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            res.status(409).send({ message: 'The name already exists!' });
+        } else {
+            res.status(404).send({ message: 'Not found!' });
+        }
     }
 });
 
@@ -46,7 +50,11 @@ router.patch(`${url}/:id`, async (req, res) => {
         );
         res.status(200).send(subcategoryInfo);
     } catch (error) {
-        res.status(400).send({ message: 'The name already exists!' });
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            res.status(409).send({ message: 'The name already exists!' });
+        } else {
+            res.status(404).send({ message: 'Not found!' });
+        }
     }
 });
 

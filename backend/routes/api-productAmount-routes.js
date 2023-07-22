@@ -13,7 +13,11 @@ router.post(url, async (req, res) => {
         const data = await addNewProductAmount(req.body);
         res.status(201).send(data);
     } catch (error) {
-        res.status(400).send({ message: 'Bad value' });
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            res.status(409).send({ message: 'Bad value!' });
+        } else {
+            res.status(404).send({ message: 'Not found!' });
+        }
     }
 });
 

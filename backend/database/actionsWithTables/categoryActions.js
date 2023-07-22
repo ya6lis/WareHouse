@@ -58,21 +58,22 @@ const deleteCategory = async (id) => {
     );
     // DELETING PRODUCTS
     try {
-        const data = await Subcategory.findAll({
+        const subcategories = await Subcategory.findAll({
             attributes: ['subcategory_id'],
             where: { category_id: id },
         });
-        data.forEach(async (e) => {
-            console.log(e.dataValues.subcategory_id);
-            await Product.update(
-                {
-                    is_deleted: true,
-                },
-                {
-                    where: { subcategory_id: e.dataValues.subcategory_id },
-                }
-            );
-        });
+        subcategories
+            .map((subcategory) => subcategory.subcategory_id)
+            .forEach(async (id) => {
+                await Product.update(
+                    {
+                        is_deleted: true,
+                    },
+                    {
+                        where: { subcategory_id: id },
+                    }
+                );
+            });
     } catch (error) {
         console.log(error);
     }
