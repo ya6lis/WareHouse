@@ -17,17 +17,20 @@ const getAllProducers = async () => {
 };
 
 const getProducer = async (id) => {
-    const producer = await Producer.findByPk(id, {attributes: ['producer_id', 'name', 'is_deleted']});
+    const producer = await Producer.findByPk(id, {
+        attributes: ['producer_id', 'name', 'is_deleted'],
+    });
     if (!producer) {
         throw new Error('Sequelize not found an object!');
     }
     return producer;
 };
 
-const updateProducer = async (id, info) => {
+const updateProducer = async (id, data) => {
+    console.log(data)
     await Producer.update(
         {
-            name: info.modalName,
+            name: data.name,
         },
         {
             where: { producer_id: id },
@@ -60,4 +63,4 @@ module.exports = {
     getProducer,
     updateProducer,
     deleteProducer,
-}
+};

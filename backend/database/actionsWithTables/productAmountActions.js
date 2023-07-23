@@ -18,4 +18,4 @@ const returnProductAmounts = async () => {
 module.exports = {
     addNewProductAmount,
     returnProductAmounts,
-}
+};

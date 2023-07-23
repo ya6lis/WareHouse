@@ -44,21 +44,23 @@ const getAllProducts = async () => {
 };
 
 const getProduct = async (id) => {
-    const product = await Product.findByPk(id, {attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted']});
+    const product = await Product.findByPk(id, {
+        attributes: ['product_id', 'name', 'price', 'unit', 'is_deleted'],
+    });
     if (!product) {
         throw new Error('Sequelize not found an object!');
     }
     return product;
 };
 
-const updateProduct = async (id, info) => {
+const updateProduct = async (id, data) => {
     await Product.update(
         {
-            name: info.modalName,
-            price: info.modalPrice,
-            unit: info.unit,
-            subcategory_id: info.subcategory_id,
-            producer_id: info.producer_id,
+            name: data.name,
+            price: data.price,
+            unit: data.unit,
+            subcategory_id: data.subcategory_id,
+            producer_id: data.producer_id,
         },
         {
             where: { product_id: id },
@@ -83,4 +85,4 @@ module.exports = {
     getProduct,
     updateProduct,
     deleteProduct,
-}
+};

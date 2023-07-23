@@ -27,26 +27,28 @@ const getAllUsers = async () => {
 };
 
 const getUser = async (id) => {
-    const user = await User.findByPk(id, {attributes: [
-        'user_id',
-        'login',
-        'email',
-        'name',
-        'is_admin',
-        'is_deleted',
-    ]});
+    const user = await User.findByPk(id, {
+        attributes: [
+            'user_id',
+            'login',
+            'email',
+            'name',
+            'is_admin',
+            'is_deleted',
+        ],
+    });
     if (!user) {
         throw new Error('Sequelize not found an object!');
     }
     return user;
 };
 
-const updateUser = async (id, info) => {
+const updateUser = async (id, data) => {
     await User.update(
         {
-            login: info.modalLogin,
-            email: info.modalEmail,
-            name: info.modalName,
+            login: data.login,
+            email: data.email,
+            name: data.name,
         },
         {
             where: { user_id: id },

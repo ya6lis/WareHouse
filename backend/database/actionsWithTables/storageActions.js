@@ -16,17 +16,19 @@ const getAllStorages = async () => {
 };
 
 const getStorage = async (id) => {
-    const storage = await Storage.findByPk(id, {attributes: ['storage_id', 'name', 'is_deleted']});
+    const storage = await Storage.findByPk(id, {
+        attributes: ['storage_id', 'name', 'is_deleted'],
+    });
     if (!storage) {
         throw new Error('Sequelize not found an object!');
     }
     return storage;
 };
 
-const updateStorage = async (id, info) => {
+const updateStorage = async (id, data) => {
     await Storage.update(
         {
-            name: info.modalName,
+            name: data.name,
         },
         {
             where: { storage_id: id },
@@ -51,4 +53,4 @@ module.exports = {
     getStorage,
     updateStorage,
     deleteStorage,
-}
+};

@@ -29,7 +29,13 @@ const getDataForNewCategory = (data) => {
             console.log('inncorect');
         } else {
             checkAllRight++;
-            data[value] = $(`input[name=${value}]`).val();
+            if (value.startsWith('modal')) {
+                let newValue = value.toLowerCase().slice(5)
+                data[newValue] = $(`input[name=${value}]`).val();
+                delete data[value]
+            } else{
+                data[value] = $(`input[name=${value}]`).val();
+            }
         }
     });
     if (checkAllRight === Object.keys(data).length) {
@@ -78,7 +84,6 @@ $('.updateModal').on('click', () => {
         modalName: null,
     };
     const data = getDataForNewCategory(categoryData);
-
     if (data) {
         fetch(`http://localhost:3000/api/v1/category/${id}`, {
             method: 'PATCH',

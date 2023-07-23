@@ -41,17 +41,22 @@ loadSubcategory();
 
 const getDataForNewSubcategory = (data) => {
     let checkAllRight = 0;
-
     Object.keys(data).forEach((value) => {
         if (!$(`input[name=${value}]`).val()) {
             console.log('inncorect');
         } else {
             checkAllRight++;
-            data[value] = $(`input[name=${value}]`).val();
+            if (value.startsWith('modal')) {
+                let newValue = value.toLowerCase().slice(5)
+                data[newValue] = $(`input[name=${value}]`).val();
+                delete data[value]
+            } else{
+                data[value] = $(`input[name=${value}]`).val();
+            }
         }
     });
     if (checkAllRight === Object.keys(data).length) {
-        return data;
+        return JSON.stringify(data);
     } else {
         return 0;
     }

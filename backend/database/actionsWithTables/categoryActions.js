@@ -18,17 +18,19 @@ const getAllCategories = async () => {
 };
 
 const getCategory = async (id) => {
-    const category = await Category.findByPk(id, {attributes: ['category_id', 'name', 'is_deleted']});
+    const category = await Category.findByPk(id, {
+        attributes: ['category_id', 'name', 'is_deleted'],
+    });
     if (!category) {
         throw new Error('Sequelize not found an object!');
     }
     return category;
 };
 
-const updateCategory = async (id, info) => {
+const updateCategory = async (id, data) => {
     await Category.update(
         {
-            name: info.modalName,
+            name: data.name,
         },
         {
             where: { category_id: id },

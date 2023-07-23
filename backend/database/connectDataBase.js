@@ -11,7 +11,9 @@ const connectDataBase = () => {
         });
 };
 
-module.exports.connectDataBase = connectDataBase;
-module.exports.sequelize = sequelize;
-module.exports.DataTypes = DataTypes;
-module.exports.Sequelize = Sequelize;
+module.exports = {
+    connectDataBase,
+    sequelize,
+    DataTypes,
+    Sequelize,
+}
