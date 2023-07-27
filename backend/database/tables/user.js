@@ -36,6 +36,10 @@ const User = sequelize.define(
             defaultValue: false,
             allowNull: false,
         },
+        refresh_token: {
+            type: DataTypes.STRING,
+            defaultValue: null,
+        }
     },
     {
         freezeTableName: true,

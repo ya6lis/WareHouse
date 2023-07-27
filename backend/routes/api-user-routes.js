@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {sendError} = require('../util/sendError');
+const { sendError } = require('../util/sendError');
+const verifyRoles = require('../util/verifyRoles');
 
 const {
-    addNewUser,
     getAllUsers,
     getUser,
     updateUser,
@@ -11,15 +11,6 @@ const {
 } = require('../database/actionsWithTables/userActions');
 
 const url = '/api/v1/user';
-
-router.post(url, async (req, res) => {
-    try {
-        const data = await addNewUser(req.body);
-        res.status(201).send(data);
-    } catch (error) {
-        sendError(res, error);
-    }
-});
 
 router.get(url, async (req, res) => {
     try {
@@ -39,7 +30,7 @@ router.get(`${url}/:id`, async (req, res) => {
     }
 });
 
-router.patch(`${url}/:id`, async (req, res) => {
+router.patch(`${url}/:id`, verifyRoles(true), async (req, res) => {
     try {
         const userInfo = await updateUser(req.params.id, req.body);
         res.status(200).send(userInfo);
@@ -48,7 +39,7 @@ router.patch(`${url}/:id`, async (req, res) => {
     }
 });
 
-router.delete(`${url}/:id`, async (req, res) => {
+router.delete(`${url}/:id`, verifyRoles(true), async (req, res) => {
     try {
         const userId = await deleteUser(req.params.id);
         res.status(200).send(userId);

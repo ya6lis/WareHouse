@@ -47,34 +47,6 @@ const getDataForNewUser = (data) => {
     }
 };
 
-// ADD
-
-$('.addBtn').on('click', () => {
-    const userData = {
-        login: null,
-        password: null,
-        email: null,
-        name: null,
-    };
-
-    const data = getDataForNewUser(userData);
-
-    if (data) {
-        fetch('http://localhost:3000/api/v1/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: data,
-        })
-            .then(setTimeout(() => loadUser(), 100))
-            .then($(`input[name]`).val(''))
-            .catch((error) => console.log(error));
-    } else {
-        console.log('not fetching');
-    }
-});
-
 // UPDATE
 
 $('.showUser').on('click', '.updUser', (event) => {
