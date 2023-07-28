@@ -1,7 +1,9 @@
 const {
     getUserDataForRefresh,
+    addToken,
 } = require('../database/actionsWithTables/userActions');
 const { sendError } = require('../util/sendError');
+const { getAccessToken, getRefreshToken } = require('../util/getTokens');
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -15,24 +17,24 @@ const handleRefreshToken = async (req, res) => {
         const refreshToken = cookies.jwt;
         const data = await getUserDataForRefresh(refreshToken);
 
-        jwt.verify(
-            refreshToken,
-            process.env.REFRESH_TOKEN_SECRET,
-            (error, decoded) => {
-                try {
-                    const accessToken = jwt.sign(
-                        { UserInfo: { login: decoded.login, is_admin: data.is_admin } },
-                        process.env.ACCESS_TOKEN_SECRET,
-                        { expiresIn: '30s' }
-                    );
-                    res.json({ accessToken });
-                } catch (error) {
-                    return res.sendStatus(403);
-                }
-            }
-        );
+        try {
+            const accessToken = getAccessToken(data);
+            const refreshToken = getRefreshToken(data);
+
+            addToken(data.login, refreshToken);
+            res.cookie('jwt', refreshToken, {
+                httpOnly: true,
+                sameSite: 'None',
+                secure: true,
+                maxAge: 24 * 60 * 60 * 1000,
+            });
+            
+            res.json({ accessToken });
+        } catch (error) {
+            return res.sendStatus(403);
+        }
     } catch (error) {
-        sendError(res, error);
+        console.log(error);
     }
 };
 

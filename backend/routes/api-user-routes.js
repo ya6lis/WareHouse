@@ -12,7 +12,7 @@ const {
 
 const url = '/api/v1/user';
 
-router.get(url, async (req, res) => {
+router.get(url, verifyRoles(true), async (req, res) => {
     try {
         const users = await getAllUsers();
         await res.send(users);
