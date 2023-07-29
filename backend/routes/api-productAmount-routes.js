@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {sendError} = require('../util/sendError');
+const verifyRoles = require('../util/verifyRoles');
 
 const {
     addNewProductAmount,
@@ -9,7 +10,7 @@ const {
 
 const url = '/api/v1/productAmount';
 
-router.post(url, async (req, res) => {
+router.post(url, verifyRoles(true), async (req, res) => {
     try {
         const data = await addNewProductAmount(req.body);
         res.status(201).send(data);

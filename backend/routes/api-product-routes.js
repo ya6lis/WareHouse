@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {sendError} = require('../util/sendError');
+const verifyRoles = require('../util/verifyRoles');
 
 const {
     addNewProduct,
@@ -12,7 +13,7 @@ const {
 
 const url = '/api/v1/product';
 
-router.post(url, async (req, res) => {
+router.post(url, verifyRoles(true), async (req, res) => {
     try {
         const data = await addNewProduct(req.body);
         res.status(201).send(data);
@@ -39,7 +40,7 @@ router.get(`${url}/:id`, async (req, res) => {
     }
 });
 
-router.patch(`${url}/:id`, async (req, res) => {
+router.patch(`${url}/:id`, verifyRoles(true), async (req, res) => {
     try {
         const productInfo = await updateProduct(req.params.id, req.body);
         res.status(200).send(productInfo);
@@ -48,7 +49,7 @@ router.patch(`${url}/:id`, async (req, res) => {
     }
 });
 
-router.delete(`${url}/:id`, async (req, res) => {
+router.delete(`${url}/:id`, verifyRoles(true), async (req, res) => {
     try {
         const userId = await deleteProduct(req.params.id);
         res.status(200).send(userId);
